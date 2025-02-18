@@ -16,22 +16,23 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="LoginPage.html">Login</a></li>
-                <li class="nav-item"><a class="nav-link" href="SignUpPage.html">Sign Up</a></li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        More
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="Profile.html">Profile</a>
-                        <a class="dropdown-item" href="#" id="logoutButton">Logout</a>
-                    </div>
-                </li>
+            <ul class="navbar-nav ml-auto" id="nav-links">
+                <!-- Dynamic content will be inserted here -->
             </ul>
         </div>
     </nav>
+    
+    <!-- Logout Confirmation Modal -->
+    <div id="logout-confirmation-modal" class="custom-modal" style="display: none;">
+        <div class="modal-content">
+            <p>Are you sure you want to log out?</p>
+            <div>
+                <button id="confirm-logout" class="btn btn-danger">Logout</button>
+                <button id="cancel-logout" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+    
 
     <!-- Main Container -->
     <div class="main-container">

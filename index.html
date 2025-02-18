@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home | Tawlity</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    
     <style>
         /* General Styles */
         body {
@@ -125,7 +127,6 @@
             color: #FFD700;
             text-decoration: none;
         }
-
         footer a:hover {
             text-decoration: underline;
         }
@@ -224,14 +225,20 @@
         </div>
     </div>
 
-
     <!-- Footer -->
     <footer>
-        <p>&copy; 2024 <a href="index.html">Tawlity</a>. All rights reserved.</p>
+        <div class="social-icons">
+            <a href="#" class="text-light"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="text-light"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-light"><i class="fab fa-instagram"></i></a>
+        </div>
+        <div class="footer-links mt-3">
+            <a href="ContactUs.html">Contact Us</a> | <a href="AboutUs.html">About</a>
+        </div>
+        <p>&copy; 2024 <a href="index.html" class="text-warning">Tawlity</a>. All rights reserved.</p>
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
      document.addEventListener("DOMContentLoaded", function () {
     const token = localStorage.getItem("authToken");

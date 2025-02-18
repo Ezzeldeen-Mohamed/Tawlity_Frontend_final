@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment | Tawlity</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css">
+    <style>
+        /* General Styles */
+        body {
+            background: linear-gradient(135deg, #0F3D2E, #1B6B50);
+            font-family: 'Poppins', sans-serif;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* علشان الـ footer يفضل في الأسفل */
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .navbar-brand {
+            font-size: 2rem;
+            color: #FFD700 !important;
+            font-weight: bold;
+        }
+
+        .navbar-nav .nav-link {
+            color: #f8f9fa !important;
+            font-size: 1.1rem;
+            margin: 0 10px;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #FFD700 !important;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 50px auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: fadeInContainer 1s ease-out;
+            flex: 1; /* علشان الـ container ياخد المساحة المتبقية */
+        }
+
+        h2 {
+            color: #183D33;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* Card Styles */
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-body {
+            background-color: #f9f9f9;
+            color: #183D33;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        /* Form Styles */
+        .form-group label {
+            color: #183D33;
+            font-weight: 600;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: #28a745;
+            box-shadow: 0 0 10px rgba(40, 167, 69, 0.5);
+        }
+
+        /* Button Styles */
+        .btn-primary {
+            background: linear-gradient(135deg, #28a745, #218838);
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+        }
+
+        /* Payment Info Styles */
+        .payment-info {
+            margin-top: 15px;
+        }
+
+        .payment-info input {
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        /* Custom Modal Styles */
+        .custom-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.3s ease;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .modal-content p {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .modal-content .btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Fade-in Animation */
+        @keyframes fadeInContainer {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Footer Styles */
+        footer {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px 0;
+            text-align: center;
+            color: #fff;
+            font-size: 0.9rem;
+            margin-top: auto; /* علشان الـ footer يفضل في الأسفل */
+        }
+
+        footer a {
+            color: #FFD700;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="index.html">Tawlity</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="reservation.html">Modify Reservation</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Payment Information -->
+    <div class="container">
+        <h2>Payment Information</h2>
+
+        <!-- Order Summary Section -->
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body" id="order-summary">
+                        <h4 class="card-title">Order Summary</h4>
+                        <p>No reservation data found.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Method Section -->
+        <form id="payment-form">
+            <div class="form-group payment-method">
+                <label for="payment-method">Select Payment Method:</label>
+                <select class="form-control" id="payment-method">
+                    <option value="credit-card">Credit Card</option>
+                    <option value="paypal">PayPal</option>
+                </select>
+            </div>
+
+            <!-- Credit Card Details -->
+            <div id="credit-card-info" class="payment-info">
+                <div class="form-group">
+                    <label for="card-number">Card Number:</label>
+                    <input type="text" class="form-control" id="card-number" placeholder="Enter your card number" required>
+                </div>
+                <div class="form-group">
+                    <label for="expiry">Expiry Date:</label>
+                    <input type="text" class="form-control" id="expiry" placeholder="MM/YY" required>
+                </div>
+                <div class="form-group">
+                    <label for="cvv">CVV:</label>
+                    <input type="text" class="form-control" id="cvv" placeholder="CVV" required>
+                </div>
+            </div>
+
+            <!-- PayPal Information -->
+            <div id="paypal-info" class="payment-info" style="display: none;">
+                <div class="form-group">
+                    <label for="paypal-email">PayPal Email:</label>
+                    <input type="email" class="form-control" id="paypal-email" placeholder="Enter your PayPal email" required>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Submit Payment</button>
+        </form>
+    </div>
+
+    <!-- Custom Modal for Confirmation Message -->
+    <div id="custom-modal" class="custom-modal">
+        <div class="modal-content">
+            <p id="modal-message">Thank you for your payment! Your transaction has been successfully completed.</p>
+            <button class="btn btn-primary" id="close-modal">OK</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 <a href="index.html">Tawlity</a>. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // JavaScript to handle form submission and show modal
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.getElementById("payment-form");
+            const modal = document.getElementById("custom-modal");
+            const closeModalBtn = document.getElementById("close-modal");
+
+            // استرجاع البيانات من Local Storage عند تحميل الصفحة
+            const reservationData = JSON.parse(localStorage.getItem("reservationData"));
+
+            if (reservationData) {
+                // عرض البيانات في قسم Order Summary
+                const orderSummary = document.getElementById("order-summary");
+                orderSummary.innerHTML = `
+                    <h4 class="card-title">Order Summary</h4>
+                    <p><strong>Restaurant:</strong> ${reservationData.restaurant}</p>
+                    <p><strong>Date:</strong> ${reservationData.date}</p>
+                    <p><strong>Time:</strong> ${reservationData.time}</p>
+                    <p><strong>Number of People:</strong> ${reservationData.people}</p>
+                    <p><strong>Table:</strong> ${reservationData.table}</p>
+                    <p><strong>Food Items:</strong> ${reservationData.food.join(", ")}</p>
+                `;
+            } else {
+                // إذا لم تكن هناك بيانات محفوظة
+                const orderSummary = document.getElementById("order-summary");
+                orderSummary.innerHTML = `
+                    <h4 class="card-title">Order Summary</h4>
+                    <p>No reservation data found.</p>
+                `;
+            }
+
+            // Toggle between Credit Card and PayPal Payment Methods
+            document.getElementById('payment-method').addEventListener('change', function() {
+                const paymentMethod = this.value;
+                const creditCardInfo = document.getElementById('credit-card-info');
+                const paypalInfo = document.getElementById('paypal-info');
+
+                if (paymentMethod === 'credit-card') {
+                    creditCardInfo.style.display = 'block';
+                    paypalInfo.style.display = 'none';
+                } else if (paymentMethod === 'paypal') {
+                    creditCardInfo.style.display = 'none';
+                    paypalInfo.style.display = 'block';
+                }
+            });
+
+            // Handle form submission
+            form.addEventListener("submit", (event) => {
+                event.preventDefault();
+
+                // Check if all required fields are filled
+                const paymentMethod = document.getElementById('payment-method').value;
+                let isValid = true;
+
+                if (paymentMethod === 'credit-card') {
+                    const cardNumber = document.getElementById('card-number').value;
+                    const expiry = document.getElementById('expiry').value;
+                    const cvv = document.getElementById('cvv').value;
+
+                    if (!cardNumber || !expiry || !cvv) {
+                        isValid = false;
+                    }
+                } else if (paymentMethod === 'paypal') {
+                    const paypalEmail = document.getElementById('paypal-email').value;
+
+                    if (!paypalEmail) {
+                        isValid = false;
+                    }
+                }
+
+                if (isValid) {
+                    // Show the modal
+                    modal.style.display = "flex";
+                } else {
+                    alert("Please fill all the required fields before submitting.");
+                }
+            });
+
+            // Close modal and redirect to home page
+            closeModalBtn.addEventListener("click", () => {
+                modal.style.display = "none";
+                window.location.href = "index.html"; // Redirect to home page
+            });
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+   /* General Styling */
+   body {
+    background: linear-gradient(135deg, #0F3D2E, #1B6B50);
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar Styling */
+.navbar {
+    background: #000; /* Black background */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.navbar-nav .nav-link {
+   color: #f8f9fa;
+   font-size: 1.1rem;
+   margin: 0 10px;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #ffdd57 !important; /* Yellow on hover */
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+}
+
+.navbar-brand {
+    font-size: 2rem !important; /* Increased font size */
+    font-weight: bold;
+    color: #ffffff !important; /* Yellow brand color */
+}
+
+.navbar-toggler {
+    border-color: #ffdd57; /* Yellow border for toggler */
+}
+
+/* Active Link Styling */
+.nav-link.active {
+    background-color: rgba(255, 221, 87, 0.2); /* Light yellow background */
+    color: #ffdd57 !important;
+    border-radius: 5px;
+}
+
+/* Main Container Styling */
+.main-container {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin: 40px auto;
+    max-width: 1200px;
+}
+
+/* Restaurant Details Styling */
+.restaurant-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #000; /* Black title */
+    margin-bottom: 20px;
+}
+
+.restaurant-location {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.menu-title {
+    font-size: 1.8rem;
+    color: #000; /* Black title */
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+.menu-list {
+    list-style: none;
+    padding: 0;
+}
+
+.menu-list li {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+.view-more {
+    color: #007bff; /* Blue link */
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.view-more:hover {
+    color: #0056b3; /* Darker blue on hover */
+    text-decoration: underline;
+}
+
+/* Reservation Card Styling */
+.reservation-card {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.reservation-card h3 {
+    font-size: 1.5rem;
+    color: #28a745; /* Green color for reservation title */
+    margin-bottom: 15px;
+}
+
+.reservation-card p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.btn-primary {
+    background-color: #007bff; /* Blue button */
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.btn-success {
+    background-color: #28a745; /* Green button */
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-success:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+/* Custom Modal Styles */
+.custom-modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.modal-buttons {
+    margin-top: 20px;
+}
+
+.modal-buttons button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal-buttons .confirm-btn {
+    background-color: #dc3545; /* Green */
+    color: #fff;
+}
+
+.modal-buttons .cancel-btn {
+    background-color: #28a745; /* Red */
+    color: #fff;
+}
+
+/* Footer Styling */
+footer {
+background: #000000; /* أسود بالكامل */
+padding: 20px 0;
+text-align: center;
+color: #fff;
+font-size: 0.9rem;
+}
+footer a {
+color: #FFD700; /* ذهبي */
+text-decoration: none;
+}
+
+footer a:hover {
+text-decoration: underline;
+}
+
+.social-icons a {
+    font-size: 1.5rem; /* Increased icon size */
+    margin: 0 10px; /* Adjusted margin */
+}
+
+.footer-links {
+    margin-top: 20px;
+}
+
+.footer-links a {
+    margin: 0 15px; /* Adjusted margin */
+}

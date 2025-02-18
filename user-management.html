@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management | Restaurant App</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <style>
+                 /* Global Styling */
+                 body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0F3D2E;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #000;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .navbar-brand {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .navbar-nav .nav-link {
+            color: #ccc;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #fff;
+        }
+
+        /* Container Styling */
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 20px;  
+            margin: 50px auto;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease-in-out;
+            animation: fadeInContainer 1s ease-out;
+        }
+
+        .container:hover {
+            transform: scale(1.02);
+        }
+
+        h2 {
+            color: #0F3D2E;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        /* Table Styling */
+        .table {
+            width: 100%;
+            margin-bottom: 1rem;
+            color: #333;
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .table th,
+        .table td {
+            padding: 12px;
+            vertical-align: middle;
+            border-top: 1px solid #dee2e6;
+        }
+        label{
+            color: #000;
+        }
+
+        .table thead th {
+            background-color: #0F3D2E;
+            color: #fff;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        .table tbody tr:hover {
+            background-color: rgba(15, 61, 46, 0.1);
+        }
+
+        /* Buttons Styling */
+        .btn-warning {
+            background-color: #ffc107;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-warning:hover {
+            background-color: #e0a800;
+            transform: scale(1.05);
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            transform: scale(1.05);
+        }
+
+        /* Footer Styling */
+        footer {
+            background-color: #000;
+            padding: 20px 0;
+            margin-top: auto;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        footer p {
+            font-size: 0.9rem;
+            color: #ccc;
+            margin: 0;
+        }
+
+        footer a {
+            color: #FFD700;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #fff;
+        }
+
+        /* Fade-in Animation */
+        @keyframes fadeInContainer {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="index.html">Restaurant App</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="Community.html">Community</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- User Management Table -->
+<div class="container">
+    <h2 class="text-center">User Management</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>  
+                <th>User ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>City</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="userTableBody">
+            <tr>
+                <td>1</td>
+                <td>John Doe</td>
+                <td>john.doe@example.com</td>
+                <td>01234567890</td>
+                <td>Cairo</td>
+                <td>Admin</td>
+                <td>
+                    <button class="btn btn-warning edit-btn" data-id="1" data-name="John Doe" data-phone="01234567890" data-city="Cairo" data-role="Admin">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                    <button class="btn btn-danger delete-btn" data-id="1">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>   
+                </td>
+            </tr>
+            <!-- More users here -->
+        </tbody>
+    </table>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel"><i class="fas fa-user-edit"></i> Edit User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editForm">
+                    <div class="form-group">
+                        <label for="editName"><i class="fas fa-user"></i> Name</label>
+                        <input type="text" class="form-control" id="editName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editPhone"><i class="fas fa-phone"></i> Phone</label>
+                        <input type="text" class="form-control" id="editPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editCity"><i class="fas fa-city"></i> City</label>
+                        <select class="form-control" id="editCity" required></select>
+                    </div>
+                    <!-- <div class="form-group">
+                        <label for="editRole"><i class="fas fa-user-tag"></i> Role</label>
+                        <select class="form-control" id="editRole" required>
+                            <option value="Admin">Admin</option>
+                            <option value="User">User</option>
+                        </select>
+                    </div> -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Close</button>
+                <button type="button" class="btn btn-primary" id="saveChanges"><i class="fas fa-save"></i> Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="text-center">
+    <p>&copy; 2024 <a href="index.html">Restaurant App</a>. All rights reserved.</p>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    $(document).ready(function () {
+const token = localStorage.getItem("authToken");
+if (!token) {
+    alert("You need to log in first!");
+    window.location.href = "LoginPage.html";
+    return;
+}
+
+// ** دالة لتحويل ENUM إلى نص **
+function getRoleString(roleValue) {
+    switch (roleValue) {
+        case 1: return "Customer";
+        case 2: return "Admin";
+        case 3: return "Restaurant Owner";
+        default: return "Unknown";
+    }
+}
+
+// ** جلب المستخدمين وعرضهم **
+function fetchUsers() {
+    fetch("https://localhost:7039/api/User", {
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${token}`,
+            "Accept": "application/json"
+        }
+    })
+    .then(response => {
+        if (!response.ok) throw new Error("Unauthorized");
+        return response.json();
+    })
+    .then(data => {
+        let userTableBody = $("#userTableBody");
+        userTableBody.empty();
+        
+        data.forEach(user => {
+            let roleString = getRoleString(user.employee_Role); // تحويل الدور إلى نص
+            let cityString = getCityString(user.employeeCity);
+            let row = `
+                <tr>
+                    <td>${user.employeeId}</td>
+                    <td>${user.employeeName}</td>
+                    <td>${user.employeeEmail}</td>
+                    <td>${user.employeePhone}</td>
+                    <td>${cityString}</td>
+                    <td>${roleString}</td> 
+                    <td>
+                        <button class="btn btn-warning edit-btn" data-id="${user.employeeId}" data-name="${user.employeeName}" data-email="${user.employeeEmail} data-phone="${user.employeePhone}"data-city="${user.employeeCity}" data-role="${user.employee_Role}">
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                        <button class="btn btn-danger delete-btn" data-id="${user.employeeId}">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </td>
+                </tr>
+            `;
+            userTableBody.append(row);
+        });
+    })
+    .catch(error => {
+        console.error("Error fetching users:", error);
+        alert("Failed to load users. Please try again.");
+    });
+}
+
+fetchUsers(); // تحميل البيانات عند بدء التشغيل
+});
+
+// ** دالة لتحويل رقم المدينة إلى اسم المدينة **
+
+function getCityString(cityValue) {
+    switch (cityValue) {
+        case 0: return "Cairo";
+        case 1: return "Alexandria";
+        case 2: return "Giza";
+        case 3: return "Sharm El Sheikh";
+        case 4: return "Hurghada";
+        case 5: return "Luxor";
+        case 6: return "Aswan";
+        case 7: return "Mansoura";
+        case 8: return "Tanta";
+        case 9: return "Suez";
+        case 10: return "Port Said";
+        case 11: return "Ismailia";
+        case 12: return "Damanhur";
+        case 13: return "Zagazig";
+        case 14: return "Minya";
+        case 15: return "Assiut";
+        case 16: return "Beni Suef";
+        case 17: return "Sohag";
+        case 18: return "Qena";
+        case 19: return "Kafr El Sheikh";
+        case 20: return "Faiyum";
+        case 21: return "Matrouh";
+        case 22: return "Damietta";
+        case 23: return "North Sinai";
+        case 24: return "South Sinai";
+        case 25: return "New Valley";
+        case 26: return "Red Sea";
+        default: return "Unknown";
+    }
+}
+
+// ** عند الضغط على زر تعديل المستخدم **
+$(document).on("click", ".edit-btn", function () {
+    let userId = $(this).data("id");
+    let userCity = $(this).data("city");
+
+    $("#editName").val($(this).data("name"));
+    $("#editPhone").val($(this).data("phone"));
+    $("#editCity").val(userCity);
+
+    $("#editModal").modal("show");
+
+    $("#saveChanges").off("click").on("click", function () {
+        let updatedUser = {
+            employeeName: $("#editName").val(),
+            employeePhone: $("#editPhone").val(),
+            employeeCity: parseInt($("#editCity").val()) // تحويل القيمة إلى رقم
+        };
+
+        console.log("Updating User:", updatedUser);
+
+        fetch(`https://localhost:7039/api/User/${userId}`, {
+            method: "PUT",
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("authToken")}`,
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(updatedUser)
+        })
+        .then(response => {
+            if (!response.ok) throw new Error(`Failed to update user: ${response.statusText}`);
+            return response.text();
+        })
+        .then(() => {
+            Swal.fire({
+                title: "Updated!",
+                text: "User updated successfully.",
+                icon: "success",
+                confirmButtonText: "OK"
+            }).then(() => {
+                location.reload(); 
+            });
+        })
+        .catch(error => {
+            Swal.fire("Error!", "Failed to update user.", "error");
+            console.error("Error updating user:", error);
+        });
+
+    });
+});
+
+// حذف المستخدم
+$(document).ready(function () {
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+            alert("You need to log in first!");
+            window.location.href = "LoginPage.html";
+            return;
+        }
+
+        // ** حذف المستخدم **
+        $(document).on("click", ".delete-btn", function () {
+            let userId = $(this).data("id"); // Get user ID from data-id attribute
+            let rowToRemove = $(this).closest("tr"); // Store the row to remove after successful deletion
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "This action cannot be undone!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const token = localStorage.getItem("authToken"); // Retrieve the token from localStorage
+
+                    fetch(`https://localhost:7039/api/User/${userId}`, {  // Using the correct API URL with the user ID
+                        method: "DELETE",
+                        headers: {
+                            "Authorization": `Bearer ${token}`, // Send token in the request header
+                            "Accept": "application/json"
+                        }
+                    })
+                    .then(response => {
+                        if (!response.ok) throw new Error(`Failed to delete user: ${response.statusText}`);
+                        return response.text();
+                    })
+                    .then(() => {
+                        Swal.fire("Deleted!", "User has been deleted.", "success");
+
+                        // Remove the row from the table without reloading the page
+                        rowToRemove.remove();
+                    })
+                    .catch(error => {
+                        Swal.fire("Error!", "Failed to delete user.", "error");
+                        console.error("Error deleting user:", error);
+                    });
+                }
+            });
+        });
+    });
+    
+    
+    function populateDropdowns() {
+    const cityDropdown = document.getElementById("editCity");
+
+    // City data
+    const cityEnum = [
+        { id: 0, name: "Cairo" },
+        { id: 1, name: "Alexandria" },
+        { id: 2, name: "Giza" },
+        { id: 3, name: "Sharm El Sheikh" },
+        { id: 4, name: "Hurghada" },
+        { id: 5, name: "Luxor" },
+        { id: 6, name: "Aswan" },
+        { id: 7, name: "Mansoura" },
+        { id: 8, name: "Tanta" },
+        { id: 9, name: "Suez" },
+        { id: 10, name: "Port Said" },
+        { id: 11, name: "Ismailia" },
+        { id: 12, name: "Damanhur" },
+        { id: 13, name: "Zagazig" },
+        { id: 14, name: "Minya" },
+        { id: 15, name: "Assiut" },
+        { id: 16, name: "Beni Suef" },
+        { id: 17, name: "Sohag" },
+        { id: 18, name: "Qena" },
+        { id: 19, name: "Kafr El Sheikh" },
+        { id: 20, name: "Faiyum" },
+        { id: 21, name: "Matrouh" },
+        { id: 22, name: "Damietta" },
+        { id: 23, name: "North Sinai" },
+        { id: 24, name: "South Sinai" },
+        { id: 25, name: "New Valley" },
+        { id: 26, name: "Red Sea" }
+    ];
+
+    // Clear existing options (if any)
+    cityDropdown.innerHTML = "";
+
+    // Add a default option
+    const defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.textContent = "Select a city";
+    defaultOption.disabled = true;
+    defaultOption.selected = true;
+    cityDropdown.appendChild(defaultOption);
+
+    // Populate city dropdown
+    cityEnum.forEach(city => {
+        const option = document.createElement("option");
+        option.value = city.id;
+        option.textContent = city.name;
+        cityDropdown.appendChild(option);
+    });
+}
+
+// Call the function to populate the dropdown
+populateDropdowns();
+
+</script>
+</body>
+</html>

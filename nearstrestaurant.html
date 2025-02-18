@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Find Nearby Restaurants</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="styles.css"> <!-- External Stylesheet -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </head>
+    
+<style>
+body {
+    background: linear-gradient(135deg, #0F3D2E, #1B6B50);
+    font-family: 'Poppins', sans-serif;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+h2 {
+    color: #FFD700;
+    font-weight: bold;
+    text-align: center;
+}
+
+.loading-text {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #FFD700;
+}
+    /* Navbar Styles */
+    .navbar {
+        background: rgba(0, 0, 0, 0.8);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .navbar-brand {
+        font-size: 2rem;
+        color: #FFD700;
+        font-weight: bold;
+    }
+
+    .navbar-nav .nav-link {
+        color: #f8f9fa !important;
+        font-size: 1.1rem;
+        margin: 0 10px;
+    }
+
+    .navbar-nav .nav-link:hover {
+        color: #FFD700 !important;
+    }
+
+.restaurant-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 10px;
+    margin: 20px 0;
+    padding: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.restaurant-card:hover {
+    transform: scale(1.05);
+}
+
+.restaurant-card img {
+    border-radius: 10px;
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.card-title {
+    color: #334d4d;
+    font-weight: bold;
+}
+
+.card-text {
+    color: #183D33;
+}
+
+.btn-primary, .btn-success {
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    width: 100%;
+    font-weight: bold;
+}
+
+.btn-primary:hover, .btn-success:hover {
+    transform: scale(1.05);
+}
+
+/* Footer Styles */
+footer {
+    background: rgba(0, 0, 0, 0.9);
+    padding: 20px 0;
+    text-align: center;
+    color: #fff;
+    font-size: 0.9rem;
+    margin-top: 30px;
+}
+footer a{
+    color: #FFD700;
+}
+/* Modal Background Overlay */
+.custom-modal {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0, 0, 0, 0.5); /* Semi-transparent dark background */
+display: flex;
+align-items: center; /* Center vertically */
+justify-content: center; /* Center horizontally */
+z-index: 1000; /* Ensure it appears above other elements */
+}
+
+/* Modal Content */
+.modal-content {
+background: rgb(255, 255, 255);
+padding: 20px;
+border-radius: 10px;
+text-align: center;
+width: 300px;
+box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+.modal-content p{
+color: #000000;
+}
+
+/* Button Styling */
+.modal-content button {
+margin: 10px;
+padding: 8px 20px;
+font-size: 16px;
+}
+.restaurant-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 10px;
+    margin: 30px auto; /* Increased margin between cards */
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.restaurant-card:hover {
+    transform: scale(1.05);
+}
+
+.restaurant-card img {
+    border-radius: 10px;
+    height: 220px; /* Slightly increased image height */
+    width: 100%;
+    object-fit: cover;
+}
+
+.card-title {
+    color: #334d4d;
+    font-weight: bold;
+    font-size: 1.4rem; /* Increased font size */
+}
+
+.card-text {
+    color: #183D33;
+    font-size: 1.1rem; /* More readable text */
+}
+
+/* Adjust spacing between rows of restaurant cards */
+.row {
+    margin-bottom: 40px; /* Increased spacing between rows */
+}
+
+
+</style>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="aboutus.html">Tawlity</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto" id="nav-links">
+                <!-- Dynamic buttons will be inserted here -->
+            </ul>
+        </div>
+            <!-- Logout Confirmation Modal -->
+            <div id="logout-confirmation-modal" class="custom-modal" style="display: none;">
+                <div class="modal-content">
+                    <p>Are you sure you want to log out?</p>
+                    <div>
+                        <button id="confirm-logout" class="btn btn-danger">Logout</button>
+                        <button id="cancel-logout" class="btn btn-secondary">Cancel</button>
+                    </div>
+                </div>
+            </div>
+    </nav>
+
+    <!-- ✅ قائمة المطاعم -->
+    <div class="container">
+        <div class="row" id="restaurantList">
+            <p class="loading-text text-center">Fetching nearby restaurants...</p>
+        </div>
+
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 <a href="index.html">Tawlity</a>. All rights reserved.</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const token = localStorage.getItem("authToken");
+    const navLinks = document.getElementById("nav-links");
+
+    if (token) {
+        // If user is logged in, show profile & logout button
+        navLinks.innerHTML = `
+            <li class="nav-item"><a class="nav-link" href="Profile.html">My Profile</a></li>
+            <li class="nav-item"><a class="nav-link" href="Community.html">Community</a></li>
+            <li class="nav-item"><button class="btn btn-danger ml-2" id="logout-btn">Logout</button></li>
+        `;
+
+        // Add logout event listener
+        document.getElementById("logout-btn").addEventListener("click", function () {
+            document.getElementById("logout-confirmation-modal").style.display = "flex"; // Show confirmation modal
+        });
+
+        // Handle confirm logout
+        document.getElementById("confirm-logout").addEventListener("click", function () {
+            localStorage.removeItem("authToken"); // Remove token
+            window.location.href = "index.html"; // Redirect to home page
+        });
+
+        // Handle cancel logout
+        document.getElementById("cancel-logout").addEventListener("click", function () {
+            document.getElementById("logout-confirmation-modal").style.display = "none"; // Hide modal
+        });
+
+    } else {
+        // If not logged in, show login & sign-up links
+        navLinks.innerHTML = `
+            <li class="nav-item"><a class="nav-link" href="LoginPage.html">Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="SignUpPage.html">Sign Up</a></li>
+            <li class="nav-item"><a class="nav-link" href="Community.html">Community</a></li>
+        `;
+    }
+});
+document.addEventListener("DOMContentLoaded", function () {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
+            const userLat = position.coords.latitude;
+            const userLon = position.coords.longitude;
+            getNearbyRestaurants(userLat, userLon);
+        }, error => {
+            console.error("Geolocation error:", error);
+            document.querySelector(".loading-text").textContent = "Failed to fetch location.";
+        });
+    } else {
+        console.error("Geolocation is not supported by this browser.");
+        document.querySelector(".loading-text").textContent = "Geolocation not supported.";
+    }
+});
+
+// ✅ جلب المطاعم بناءً على الموقع
+function getNearbyRestaurants(lat, lon, radius = 10) {
+    fetch(`https://localhost:7039/api/Restaurant/nearby?lat=${lat}&lon=${lon}&radius=${radius}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.length === 0) {
+                document.querySelector(".loading-text").textContent = "No nearby restaurants found.";
+                return;
+            }
+            displayRestaurants(data, lat, lon);
+        })
+        .catch(error => {
+            console.error("Error fetching nearby restaurants:", error);
+            document.querySelector(".loading-text").textContent = "Failed to load restaurants.";
+        });
+}
+
+// ✅ حساب أقرب مطعم
+function getNearestRestaurant(restaurants, userLat, userLon) {
+    let nearest = null;
+    let minDistance = Number.MAX_VALUE;
+
+    restaurants.forEach(restaurant => {
+        let distance = calculateDistance(userLat, userLon, restaurant.latitude, restaurant.longitude);
+        if (distance < minDistance) {
+            minDistance = distance;
+            nearest = restaurant;
+        }
+    });
+
+    return nearest;
+}
+
+// ✅ حساب المسافة بين نقطتين (Haversine Formula)
+function calculateDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371; // نصف قطر الأرض بالكيلومترات
+    const dLat = (lat2 - lat1) * (Math.PI / 180);
+    const dLon = (lon2 - lon1) * (Math.PI / 180);
+    const a = 
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+}
+
+// ✅ عرض أقرب مطعم في الأعلى
+function displayRestaurants(restaurants, userLat, userLon) {
+    let restaurantList = document.getElementById("restaurantList");
+    restaurantList.innerHTML = ""; 
+
+    const nearestRestaurant = getNearestRestaurant(restaurants, userLat, userLon);
+
+    if (nearestRestaurant) {
+        let nearestCard = `
+            <div class="col-md-12">
+                <h3 class="text-center text-success">📍 Nearest Restaurant: ${nearestRestaurant.name}</h3>
+            </div>
+        `;
+        restaurantList.innerHTML += nearestCard;
+    }
+
+    restaurants.forEach(restaurant => {
+        let card = `
+            <div class="col-md-4 restaurant-card" data-name="${restaurant.name}">
+                <div class="card">
+                    <img class="card-img-top" src="./assets/images/restaurant-placeholder.jpg" alt="${restaurant.name}">
+                    <div class="card-body">
+                        <h5 class="card-title">${restaurant.name}</h5>
+                        <p class="card-text">${restaurant.address}</p>
+                        <a href="Restaurant-Details-Page.html?id=${restaurant.id}" class="btn btn-primary">View Details</a>
+                        <a href="Reservation.html?restaurantId=${restaurant.id}" class="btn btn-success mt-2">Book a Table</a>
+                    </div>
+                </div>
+            </div>
+        `;
+        restaurantList.innerHTML += card;
+    });
+}
+
+
+</script> <!-- ملف الـ JavaScript الخارجي -->
+</body>
+</html>

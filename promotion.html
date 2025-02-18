@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promotions | Restaurant App</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0F3D2E;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            background-color: #000;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .navbar-brand {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 40px;
+            margin: 50px auto;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease-in-out;
+            animation: fadeInContainer 1s ease-out;
+            color: #0F3D2E;
+        }
+
+        .container:hover {
+            transform: scale(1.02);
+        }
+
+        h2 {
+            color: #0F3D2E;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .promotion-item {
+            background: #fff;
+            color: #0F3D2E;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-edit {
+            background: #FFD700;
+            color: #000;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-edit:hover {
+            background: #E6C200;
+        }
+
+        .btn-add {
+            background: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            display: block;
+            margin: 20px auto;
+        }
+
+        .btn-add:hover {
+            background: #218838;
+        }
+
+        @keyframes fadeInContainer {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="index.html">Restaurant App</a>
+    </nav>
+
+    <div class="container mt-5">
+        <h2 class="text-center">Current Promotions</h2>
+        <button class="btn-add" onclick="addPromotion()">+ Add Offer</button>
+        <div id="promotions-list" class="mt-3">
+            <div class="promotion-item">
+                <span>50% off on all pizzas - Limited time offer!</span>
+                <button class="btn-edit" onclick="editPromotion(this)">Edit</button>
+            </div>
+            <div class="promotion-item">
+                <span>Buy 1 Get 1 Free on all burgers - This weekend only!</span>
+                <button class="btn-edit" onclick="editPromotion(this)">Edit</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function addPromotion() {
+            let newPromo = prompt("Enter new promotion:");
+            if (newPromo) {
+                let promoList = document.getElementById("promotions-list");
+                let promoDiv = document.createElement("div");
+                promoDiv.classList.add("promotion-item");
+                promoDiv.innerHTML = `<span>${newPromo}</span> <button class='btn-edit' onclick='editPromotion(this)'>Edit</button>`;
+                promoList.appendChild(promoDiv);
+            }
+        }
+
+        function editPromotion(button) {
+            let promoText = button.parentElement.querySelector("span");
+            let updatedText = prompt("Edit your promotion:", promoText.innerText);
+            if (updatedText) {
+                promoText.innerText = updatedText;
+            }
+        }
+    </script>
+</body>
+</html>

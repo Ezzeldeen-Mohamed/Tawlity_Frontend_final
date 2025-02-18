@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tables Layout | Tawlity</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css">
+  <style>
+    /* General Styles */
+    body {
+      background: linear-gradient(135deg, #0F3D2E, #1B6B50);
+      font-family: 'Poppins', sans-serif;
+      color: #ffffff;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Navbar Styles */
+    .navbar {
+      background: rgba(0, 0, 0, 0.8);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+    .navbar-brand {
+      font-size: 2rem;
+      color: #FFD700;
+      font-weight: bold;
+    }
+    .navbar-nav .nav-link {
+      color: #f8f9fa !important;
+      font-size: 1.1rem;
+      margin: 0 10px;
+    }
+    .navbar-nav .nav-link:hover {
+      color: #FFD700 !important;
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1200px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 15px;
+      padding: 40px;
+      margin: 50px auto;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      animation: fadeInContainer 1s ease-out;
+    }
+
+    /* Headings */
+    h2 {
+      color: #183D33;
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    /* Table Section Styles */
+    .table-section {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 30px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .table-section img {
+      width: 200px;
+      height: 150px;
+      border-radius: 10px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    .table-section img:hover {
+      transform: scale(1.05);
+    }
+    .table-section h4 {
+      font-size: 1.5rem;
+      color: #1B6B50;
+      margin-bottom: 10px;
+    }
+    .location-tag {
+      color: #1B6B50;
+      font-weight: 600;
+      margin-top: 10px;
+      font-size: 0.9rem;
+    }
+    .table-badge {
+      background: #1B6B50;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 20px;
+      margin: 5px;
+      display: inline-block;
+      transition: all 0.3s;
+      font-size: 0.9rem;
+    }
+    .table-badge:hover {
+      transform: scale(1.05);
+      background: #28a745;
+      cursor: pointer;
+    }
+
+    /* Fade-in Animation */
+    @keyframes fadeInContainer {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Footer Styles */
+    footer {
+      background: rgba(0, 0, 0, 0.9);
+      padding: 20px 0;
+      text-align: center;
+      color: #fff;
+      font-size: 0.9rem;
+    }
+    footer a {
+      color: #FFD700;
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <a class="navbar-brand" href="index.html">Tawlity</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" 
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="Restaurant-Details-Page.html">Restaurant Details</a></li>
+        <li class="nav-item"><a class="nav-link" href="Pyment.html">Payment</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container">
+    <h2 class="mb-4">Our Tables Layout</h2>
+
+    <!-- Section 1 -->
+    <div class="table-section">
+      <img src="./assets/images/download.jpg" alt="By the Window">
+      <div>
+        <h4>🪟 By the Window</h4>
+        <p class="location-tag">Perfect for romantic dinners with scenic views</p>
+        <div>
+          <span class="table-badge">Table 1 (2 seats)</span>
+          <span class="table-badge">Table 2 (4 seats)</span>
+          <span class="table-badge">Table 3 (2 seats)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 2 -->
+    <div class="table-section">
+      <img src="./assets/images/Burger.jpg" alt="Outdoor Area">
+      <div>
+        <h4>🌳 Outdoor Area</h4>
+        <p class="location-tag">Outside the restaurant - Smoking allowed</p>
+        <div>
+          <span class="table-badge">Table 4 (6 seats)</span>
+          <span class="table-badge">Table 5 (4 seats)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3 -->
+    <div class="table-section">
+      <img src="assets/images/table3.jpg" alt="Family Zone">
+      <div>
+        <h4>👨👩👧👦 Family Zone</h4>
+        <p class="location-tag">Spacious area for family gatherings</p>
+        <div>
+          <span class="table-badge">Table 6 (8 seats)</span>
+          <span class="table-badge">Table 7 (10 seats)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 4 -->
+    <div class="table-section">
+      <img src="assets/images/table2.jpg" alt="Business Area">
+      <div>
+        <h4>💼 Business Area</h4>
+        <p class="location-tag">Quiet zone for business meetings</p>
+        <div>
+          <span class="table-badge">Table 8 (4 seats)</span>
+          <span class="table-badge">Table 9 (4 seats)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2024 <a href="index.html">Tawlity</a>. All rights reserved.</p>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | Tawlity</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="ProfileStyle.css">
+    
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="index.html">Tawlity</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="Reservation.html">Reservations</a></li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="logout-btn">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Profile Section -->
+    <div class="container mt-5">
+        <h2 class="text-center">My Profile</h2>
+        <div class="row mt-4 profile-info">
+            <!-- User Info -->
+            <div class="col-md-4 text-center">
+                <img src="./assets/images/user-avatarr.jpeg" alt="User Avatar" class="img-fluid rounded-circle profile-img mb-3">
+                <h4>John Doe</h4>
+                <p>Email: john.doe@example.com</p>
+                <p>Address: 123 Main Street, Cityville</p>
+            </div>
+
+            <!-- Profile Actions -->
+            <div class="col-md-8">
+                <h5>Reservation History:</h5>
+                <ul class="list-group mb-4">
+                    <li class="list-group-item">Restaurant 1 - 25/10/2024</li>
+                    <li class="list-group-item">Restaurant 2 - 12/11/2024</li>
+                    <li class="list-group-item">Restaurant 3 - 18/12/2024</li>
+                </ul>
+                <div class="profile-actions">
+                    <a href="EditProfile.html" class="btn btn-primary">Edit Profile</a>
+                    <a href="DeleteProfile.html" class="btn btn-danger ml-2">Delete Account</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center mt-5">
+        <p>&copy; 2024 <a href="index.html">Tawlity</a>. All rights reserved.</p>
+    </footer>
+
+    <!-- Custom Logout Confirmation Modal -->
+    <div id="custom-modal" class="custom-modal">
+        <div class="modal-content">
+            <h4>Confirm Logout</h4>
+            <p>Are you sure you want to logout? This action cannot be undone.</p>
+            <div class="modal-buttons">
+                <button class="btn-cancel" id="close-modal">Cancel</button>
+                <button class="btn-confirm" id="confirm-logout">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="AppsJson/Profile.js">
+      
+    </script>
+</body>
+</html>

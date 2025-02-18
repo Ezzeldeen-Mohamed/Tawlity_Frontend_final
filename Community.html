@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community | Tawlity</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="CommutniyStyle.css">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Custom Modal Styling */
+        .custom-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.3s ease;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .modal-content p {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .modal-content .btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            margin: 0 5px; /* Add space between buttons */
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .reaction-container {
+    position: relative;
+    display: inline-block;
+}
+
+.reaction-menu {
+    display: none;
+    position: absolute;
+    bottom: 35px;
+    left: 0;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 5px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    white-space: nowrap;
+}
+
+.reaction-menu button {
+    background: none;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.reaction-menu button:hover {
+    background: #f0f0f0;
+    border-radius: 5px;
+}
+
+/* Show reactions on hover */
+.reaction-container:hover .reaction-menu {
+    display: flex;
+    gap: 5px;
+}
+.reaction-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* Hide menu initially */
+.reaction-menu {
+    display: none;
+    position: absolute;
+    bottom: 35px;
+    left: 0;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 5px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    white-space: nowrap;
+}
+
+.reaction-menu button {
+    background: none;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* Hover Effect */
+.reaction-menu button:hover {
+    background: #f0f0f0;
+    border-radius: 5px;
+}
+
+/* Show reactions on hover */
+.reaction-container:hover .reaction-menu {
+    display: flex;
+    gap: 5px;
+}
+
+/* Change the button when a reaction is selected */
+.selected-reaction {
+    color: #fff;
+    background: #007bff;
+    border-color: #007bff;
+}
+
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="index.html">Tawlity</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="profile.html">My Profile</a></li>
+                <li class="nav-item"><a class="nav-link" href="logout.html">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Community Section -->
+    <div class="container mt-5">
+        <h2 class="text-center text-dark">Community Posts</h2>
+
+        <!-- Create New Post Section -->
+        <div class="mb-4 shadow-lg p-4 bg-white rounded">
+            <h5 class="text-dark">Create a New Post</h5>
+            <form id="new-post-form">
+                <div class="form-group">
+                    <textarea class="form-control" id="newPostContent" rows="3" placeholder="Share your dining experience..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Post</button>
+            </form>
+        </div>
+
+        <!-- Posts Section -->
+        <div id="community-posts">
+            <!-- Example Post Card -->
+            <div class="card mb-3 post-card">
+                <div class="card-body">
+                    <h5 class="card-title text-dark">John Doe</h5>
+                    <p class="card-text text-dark">Amazing food at Restaurant 1! <a href="Restaurant-Details-Page.html" class="text-primary">Visit Restaurant</a></p>
+                    <small class="text-muted">Posted on 10/10/2024</small>
+                    <div class="mt-2 d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="reaction-container">
+                                <!-- Main Reaction Button -->
+                                <button class="btn btn-sm btn-outline-primary main-reaction-btn">
+                                    <i class="fas fa-thumbs-up"></i> React
+                                </button>
+                            
+                                <!-- Reaction Menu (Hidden Initially) -->
+                                <div class="reaction-menu">
+                                    <button class="reaction-btn" data-reaction="Like"><i class="fas fa-thumbs-up"></i> Like</button>
+                                    <button class="reaction-btn" data-reaction="Love"><i class="fas fa-heart"></i> Love</button>
+                                    <button class="reaction-btn" data-reaction="Haha"><i class="fas fa-laugh"></i> Haha</button>
+                                    <button class="reaction-btn" data-reaction="Wow"><i class="fas fa-surprise"></i> Wow</button>
+                                    <button class="reaction-btn" data-reaction="Sad"><i class="fas fa-sad-tear"></i> Sad</button>
+                                    <button class="reaction-btn" data-reaction="Angry"><i class="fas fa-angry"></i> Angry</button>
+                                </div>
+                            </div>                                                                                                            
+                            <button class="btn btn-sm btn-outline-primary comment-btn">
+                                <i class="fas fa-comment"></i> Comment (<span class="comment-count">0</span>)
+                            </button>
+                        </div>
+                    </div>
+                    <div class="comments mt-3"></div>
+                </div>
+            </div>
+            <!-- Additional Posts will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <!-- Confirmation Modal for Logout -->
+    <div id="logout-confirmation-modal" class="custom-modal">
+        <div class="modal-content">
+            <p>Are you sure you want to logout?</p>
+            <div>
+                <button id="confirm-logout" class="btn btn-danger">Logout</button>
+                <button id="cancel-logout" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center mt-5 bg-black text-light p-3">
+        <p>&copy; 2024 <a href="index.html" class="text-warning">Tawlity</a>. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Handle Logout Link Click
+        document.querySelector('.nav-link[href="logout.html"]').addEventListener('click', function (e) {
+            e.preventDefault(); // Prevent default link behavior
+            const logoutModal = document.getElementById('logout-confirmation-modal');
+            logoutModal.style.display = 'flex'; // Show confirmation modal
+        });
+
+        // Handle Confirm Logout Button Click
+        document.getElementById('confirm-logout').addEventListener('click', function () {
+            // Redirect to home page
+            window.location.href = 'LoginPage.html';
+        });
+
+        // Handle Cancel Logout Button Click
+        document.getElementById('cancel-logout').addEventListener('click', function () {
+            const logoutModal = document.getElementById('logout-confirmation-modal');
+            logoutModal.style.display = 'none'; // Hide confirmation modal
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".reaction-container").forEach(container => {
+        const mainButton = container.querySelector(".main-reaction-btn");
+        const reactionMenu = container.querySelector(".reaction-menu");
+
+        // Handle reaction selection
+        reactionMenu.addEventListener("click", function (event) {
+            if (event.target.classList.contains("reaction-btn")) {
+                const selectedReaction = event.target.dataset.reaction;
+                const iconHtml = event.target.innerHTML; // Get button content
+
+                // Update the main button with the selected reaction
+                mainButton.innerHTML = iconHtml;
+                mainButton.classList.add("selected-reaction");
+
+                // Hide the menu
+                reactionMenu.style.display = "none";
+            }
+        });
+
+        // Show reaction menu on hover
+        mainButton.addEventListener("mouseenter", function () {
+            reactionMenu.style.display = "flex";
+        });
+
+        // Hide the menu when moving away
+        container.addEventListener("mouseleave", function () {
+            reactionMenu.style.display = "none";
+        });
+    });
+});
+
+        // Handle New Post Submission
+        document.getElementById("new-post-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const postContent = document.getElementById("newPostContent").value;
+            if (postContent.trim() === "") return;
+
+            const newPost = `
+                <div class="card mb-3 post-card">
+                    <div class="card-body">
+                        <h5 class="card-title text-dark">You</h5>
+                        <p class="card-text text-dark">${postContent}</p>
+                        <small class="text-muted">Posted now</small>
+                        <div class="mt-2 d-flex justify-content-between align-items-center">
+                            <div>
+                                <button class="btn btn-sm btn-outline-success like-btn">
+                                    <i class="fas fa-thumbs-up"></i> Like (<span class="like-count">0</span>)
+                                </button>
+                                <button class="btn btn-sm btn-outline-primary comment-btn">
+                                    <i class="fas fa-comment"></i> Comment (<span class="comment-count">0</span>)
+                                </button>
+                            </div>
+                        </div>
+                        <div class="comments mt-3"></div>
+                    </div>
+                </div>
+            `;
+            document.getElementById("community-posts").insertAdjacentHTML("afterbegin", newPost);
+            document.getElementById("newPostContent").value = ""; // مسح حقل النص
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("community-posts").addEventListener("click", function(event) {
+            if (event.target.classList.contains("reaction-btn") || event.target.closest('.reaction-btn')) {
+                const reactionButton = event.target.classList.contains("reaction-btn") ? event.target : event.target.closest('.reaction-btn');
+                const postCard = reactionButton.closest(".post-card");
+                const reactionsContainer = postCard.querySelector(".reactions-container");
+
+                // Remove previous reaction if exists
+                const previousReaction = reactionsContainer.querySelector(".selected");
+                if (previousReaction && previousReaction !== reactionButton) {
+                    previousReaction.classList.remove("selected");
+                }
+
+                // Toggle the selected reaction
+                if (reactionButton.classList.contains("selected")) {
+                    reactionButton.classList.remove("selected"); // Remove reaction
+                } else {
+                    reactionButton.classList.add("selected"); // Apply new reaction
+                }
+            }
+        });
+    });
+
+
+
+        // Handle Comment Button Click
+        document.getElementById("community-posts").addEventListener("click", function(event) {
+            if (event.target.classList.contains("comment-btn") || event.target.closest('.comment-btn')) {
+                const commentButton = event.target.classList.contains("comment-btn") ? event.target : event.target.closest('.comment-btn');
+                const postCard = commentButton.closest('.card');
+                const commentsSection = postCard.querySelector('.comments');
+
+                // إنشاء نموذج لإضافة تعليق
+                const commentForm = `
+                    <div class="comment-form mt-3">
+                        <textarea class="form-control mb-2" placeholder="Write a comment..." rows="2"></textarea>
+                        <button class="btn btn-sm btn-primary add-comment-btn">
+                            <i class="fas fa-plus"></i> Add Comment
+                        </button>
+                    </div>
+                `;
+
+                // إضافة النموذج إذا لم يكن موجودًا بالفعل
+                if (!postCard.querySelector('.comment-form')) {
+                    commentsSection.insertAdjacentHTML('beforeend', commentForm);
+                }
+            }
+
+            // إضافة تعليق جديد
+            if (event.target.classList.contains("add-comment-btn") || event.target.closest('.add-comment-btn')) {
+                const addCommentButton = event.target.classList.contains("add-comment-btn") ? event.target : event.target.closest('.add-comment-btn');
+                const commentForm = addCommentButton.closest('.comment-form');
+                const commentText = commentForm.querySelector('textarea').value;
+
+                if (commentText.trim() !== "") {
+                    const newComment = `
+                        <p class="text-dark"><strong>You:</strong> ${commentText}</p>
+                    `;
+                    commentForm.insertAdjacentHTML('beforebegin', newComment);
+                    commentForm.querySelector('textarea').value = ""; // مسح حقل النص
+
+                    // تحديث عداد التعليقات
+                    const commentButton = commentForm.closest('.card').querySelector('.comment-btn');
+                    const commentCountElement = commentButton.querySelector('.comment-count');
+                    let commentCount = parseInt(commentCountElement.textContent);
+                    commentCount += 1;
+                    commentCountElement.textContent = commentCount;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

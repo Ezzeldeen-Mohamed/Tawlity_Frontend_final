@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Restaurant App</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styling */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0F3D2E;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #000;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .navbar-brand {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .navbar-nav .nav-link {
+            color: #ccc;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #fff;
+        }
+
+        /* Container Styling */
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 40px;
+            margin: 50px auto;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease-in-out;
+            animation: fadeInContainer 1s ease-out;
+        }
+
+        .container:hover {
+            transform: scale(1.02);
+        }
+
+        h2 {
+            color: #0F3D2E;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        h4 {
+            color: #0F3D2E;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        /* Buttons Styling */
+        .btn-primary {
+            background: linear-gradient(135deg, #28a745, #218838);
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #093F28;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            scale: 1.05;
+        }
+
+        /* Cards Styling */
+        .card {
+            background-color: #fff;
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card-body {
+            color: #333;
+        }
+
+        .card-title {
+            font-weight: 700;
+            color: #0F3D2E;
+        }
+
+        /* Footer Styling */
+        footer {
+            background-color: #000;
+            padding: 20px 0;
+            margin-top: auto;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        footer p {
+            font-size: 0.9rem;
+            color: #ccc;
+            margin: 0;
+        }
+
+        footer a {
+            color: #FFD700;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #fff;
+        }
+
+        /* Fade-in Animation */
+        @keyframes fadeInContainer {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="index.html">Restaurant App</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="Community.html">Community</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Admin Dashboard -->
+    <div class="container">
+        <h2 class="text-center">Admin Dashboard</h2>
+        
+        <!-- Admin Dashboard Links -->
+        <div class="row mt-4">
+            <div class="col-md-3 mb-3">
+                <a href="restaurant-management.html" class="btn btn-primary btn-block">Manage Restaurants</a>
+            </div>
+            <div class="col-md-3 mb-3">
+                <a href="user-management.html" class="btn btn-primary btn-block">User Management</a>
+            </div>
+            <div class="col-md-3 mb-3">
+                <a href="review.html" class="btn btn-primary btn-block">Manage Reviews</a>
+            </div>
+            <div class="col-md-3 mb-3">
+                <a href="promotion.html" class="btn btn-primary btn-block">Manage Promotions</a>
+            </div>
+        </div>
+
+        <!-- Admin Dashboard Overview Section -->
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <h4>Overview</h4>
+                <div class="card">
+                    <div class="card-body">
+                        <p>Welcome to the admin dashboard! Use the buttons above to manage different aspects of the restaurant application.</p>
+                        <p>Here, you can oversee reservations, user statistics, and promotional activities effectively.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Statistics Overview -->
+        <div class="row mt-4">
+            <div class="col-md-3 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Restaurants</h5>
+                        <p id="total-restaurants">Loading...</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Reservations</h5>
+                        <p id="total-reservations">Loading...</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Reviews</h5>
+                        <p id="total-reviews">Loading...</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Active Promotions</h5>
+                        <p id="active-promotions">Loading...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <p>&copy; 2024 <a href="index.html">Restaurant App</a>. All rights reserved.</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Example of dynamically loading data via API (Simulated)
+        $(document).ready(function() {
+            // Simulating an API call with setTimeout to load the data dynamically
+            setTimeout(function() {
+                // These values would come from your backend or API
+                $("#total-restaurants").text(15);
+                $("#total-reservations").text(120);
+                $("#total-reviews").text(250);
+                $("#active-promotions").text(5);
+            }, 1000);  // Simulating an API call delay
+        });
+    </script>
+</body>
+</html>

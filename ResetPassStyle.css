@@ -1,0 +1,138 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #0F3D2E, #094D39);
+    color: #fff;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #000; /* Black navbar */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    padding: 0.8rem 1rem;
+}
+
+.navbar-brand {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #000000 !important;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.8); /* Subtle white for links */
+    font-size: 1rem;
+    margin: 0 15px;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #CFFFE5; /* Light green on hover */
+    transform: scale(1.1);
+}
+
+/* Reset Password Form */
+.container {
+    max-width: 500px;
+    margin: 50px auto;
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.container h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #000; /* Black title for contrast */
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.container p {
+    font-size: 1rem;
+    color: #555;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.form-control {
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    padding: 12px 15px;
+    font-size: 1rem;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #0F3D2E;
+    box-shadow: 0 0 8px rgba(15, 61, 46, 0.5);
+    outline: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #28a745, #218838);
+    border: none;
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #093F28; /* Darker green for hover */
+    transform: translateY(-2px);
+}
+
+
+/* Footer */
+footer {
+    background: rgba(0, 0, 0, 0.9);
+    padding: 20px 0;
+    text-align: center;
+    color: #fff;
+    font-size: 0.9rem;
+}
+footer p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+footer a {
+    color: #FFD700;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Fade-in Animation */
+@keyframes fadeInContainer {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* Apply Fade-in to the Login Container */
+.container {
+    animation: fadeInContainer 1s ease-out;
+}

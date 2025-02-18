@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Account | Tawlity</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="DeleteProfileStyle.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="index.html">Tawlity</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="reservation-page.html">Reservations</a></li>
+                <li class="nav-item"><a class="nav-link" href="logout.html">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Delete Account Confirmation -->
+    <div class="container mt-5">
+        <h2 class="text-center">Delete Account</h2>
+        <p class="text-center" style="color: #183D33;">Are you sure you want to delete your account? This action cannot be undone.</p>
+        <div class="text-center">
+            <button id="delete-account-btn" class="btn btn-danger btn-block">Delete My Account</button>
+            <a href="profile.html" class="btn btn-secondary btn-block mt-3">Back to Profile</a>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmation-modal" class="custom-modal">
+        <div class="modal-content">
+            <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+            <div>
+                <button id="confirm-delete" class="btn btn-danger">Delete</button>
+                <button id="cancel-delete" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="custom-modal">
+        <div class="modal-content">
+            <p id="success-message"></p>
+            <button class="btn btn-primary" id="close-success-modal">OK</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <p>&copy; 2024 <a href="index.html">Tawlity</a>. All rights reserved.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="AppsJson/DeleteProfile.js"></script>
+</body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | Tawlity</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css">
+    <style>
+        /* General Styles */
+        body {
+            background: linear-gradient(135deg, #0F3D2E, #1B6B50);
+            font-family: 'Poppins', sans-serif;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .navbar-brand {
+            font-size: 2rem;
+            color: #FFD700;
+            font-weight: bold;
+        }
+
+        .navbar-nav .nav-link {
+            color: #f8f9fa !important;
+            font-size: 1.1rem;
+            margin: 0 10px;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #FFD700 !important;
+        }
+
+        /* Promotional Banner */
+        .bg-primary {
+            background: linear-gradient(135deg, #28a745, #218838) !important;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 90%;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Search Bar */
+        .form-control {
+            border-radius: 25px;
+            border: 1px solid #ddd;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: #28a745;
+            box-shadow: 0 0 10px rgba(40, 167, 69, 0.5);
+        }
+
+        /* Featured Restaurants */
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card-img-top {
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            height: 200px; /* Fixed height for images */
+            object-fit: cover; /* Ensures images cover the area properly */
+        }
+
+        .card-title {
+            color: #183D33;
+            font-weight: bold;
+        }
+
+        .card-text {
+            color: #183D33;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #28a745, #218838);
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-success:hover {
+            transform: scale(1.05);
+        }
+
+        /* Footer Styles */
+        footer {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px 0;
+            text-align: center;
+            color: #fff;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: #FFD700;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+        /* Modal Background Overlay */
+.custom-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent dark background */
+    display: flex;
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    z-index: 1000; /* Ensure it appears above other elements */
+}
+
+/* Modal Content */
+.modal-content {
+    background: rgb(255, 255, 255);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 300px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+.modal-content p{
+    color: #000000;
+}
+
+/* Button Styling */
+.modal-content button {
+    margin: 10px;
+    padding: 8px 20px;
+    font-size: 16px;
+}
+
+        
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="aboutus.html">Tawlity</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto" id="nav-links">
+                <!-- Dynamic buttons will be inserted here -->
+            </ul>
+        </div>
+            <!-- Logout Confirmation Modal -->
+            <div id="logout-confirmation-modal" class="custom-modal" style="display: none;">
+                <div class="modal-content">
+                    <p>Are you sure you want to log out?</p>
+                    <div>
+                        <button id="confirm-logout" class="btn btn-danger">Logout</button>
+                        <button id="cancel-logout" class="btn btn-secondary">Cancel</button>
+                    </div>
+                </div>
+            </div>
+    </nav>
+
+    <!-- Promotional Banner -->
+    <section class="bg-primary text-white text-center p-3">
+        <h2>Special Offer: 20% Off on All Reservations!</h2>
+        <p>Reserve your table today and enjoy exclusive discounts.</p>
+    </section>
+
+    <!-- Search Bar -->
+    <div class="container mt-4">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" id="searchInput" placeholder="Search for restaurants or food items" aria-label="Search">
+        </div>
+    </div>
+
+    <!-- Featured Restaurants -->
+    <div class="container">
+        <h2 class="text-center">Featured Restaurants <a class="navbar-brand" href="nearstrestaurant.html"> Find nearest restaurant </a></h2>
+
+        <div class="row" id="restaurantList">
+            <!-- Restaurant 1 -->
+            <div class="col-md-4 restaurant-card" data-name="Restaurant 1">
+                <div class="card">
+                    <img class="card-img-top" src="./assets/images/restaurant1.jpg" alt="Restaurant 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Restaurant 1</h5>
+                        <p class="card-text">Best food in town!</p>
+                        <a href="Restaurant-Details-Page.html" class="btn btn-primary">View Details</a>
+                        <a href="Reservation.html" class="btn btn-success mt-2">Book a Table</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 <a href="index.html">Tawlity</a>. All rights reserved.</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+     document.addEventListener("DOMContentLoaded", function () {
+    const token = localStorage.getItem("authToken");
+    const navLinks = document.getElementById("nav-links");
+
+    if (token) {
+        // If user is logged in, show profile & logout button
+        navLinks.innerHTML = `
+            <li class="nav-item"><a class="nav-link" href="Profile.html">My Profile</a></li>
+            <li class="nav-item"><a class="nav-link" href="Community.html">Community</a></li>
+            <li class="nav-item"><button class="btn btn-danger ml-2" id="logout-btn">Logout</button></li>
+        `;
+
+        // Add logout event listener
+        document.getElementById("logout-btn").addEventListener("click", function () {
+            document.getElementById("logout-confirmation-modal").style.display = "flex"; // Show confirmation modal
+        });
+
+        // Handle confirm logout
+        document.getElementById("confirm-logout").addEventListener("click", function () {
+            localStorage.removeItem("authToken"); // Remove token
+            window.location.href = "index.html"; // Redirect to home page
+        });
+
+        // Handle cancel logout
+        document.getElementById("cancel-logout").addEventListener("click", function () {
+            document.getElementById("logout-confirmation-modal").style.display = "none"; // Hide modal
+        });
+
+    } else {
+        // If not logged in, show login & sign-up links
+        navLinks.innerHTML = `
+            <li class="nav-item"><a class="nav-link" href="LoginPage.html">Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="SignUpPage.html">Sign Up</a></li>
+            <li class="nav-item"><a class="nav-link" href="Community.html">Community</a></li>
+        `;
+    }
+});
+            // Search functionality
+            document.getElementById("searchInput").addEventListener("input", function () {
+                const searchQuery = this.value.toLowerCase();
+                const restaurantCards = document.querySelectorAll(".restaurant-card");
+
+                restaurantCards.forEach(card => {
+                    const restaurantName = card.getAttribute("data-name").toLowerCase();
+                    const restaurantDescription = card.querySelector(".card-text").textContent.toLowerCase();
+
+                    if (restaurantName.includes(searchQuery) || restaurantDescription.includes(searchQuery)) {
+                        card.style.display = "block";
+                    } else {
+                        card.style.display = "none";
+                    }
+                });
+            });
+            document.addEventListener("DOMContentLoaded", function () {
+    fetchRestaurants(); // تحميل المطاعم عند فتح الصفحة
+});
+
+function fetchRestaurants() {
+    fetch("https://localhost:7039/api/Restaurant")
+        .then(response => response.json())
+        .then(data => {
+            displayRestaurants(data);
+        })
+        .catch(error => console.error("Error fetching restaurants:", error));
+}
+
+function displayRestaurants(restaurants) {
+    let restaurantList = document.getElementById("restaurantList");
+    restaurantList.innerHTML = ""; // تفريغ المحتوى السابق
+
+    restaurants.forEach(restaurant => {
+        let card = `
+            <div class="col-md-4 restaurant-card" data-name="${restaurant.name}" data-description="${restaurant.description}">
+                <div class="card">
+                    <img class="card-img-top" src="./assets/images/restaurant1.jpg" alt="${restaurant.name}">
+                    <div class="card-body">
+                        <h5 class="card-title">${restaurant.name}</h5>
+                        <p class="card-text">${restaurant.description}</p>
+                        <a href="Restaurant-Details-Page.html?id=${restaurant.id}" class="btn btn-primary">View Details</a>
+                        <a href="Reservation.html?restaurantId=${restaurant.id}" class="btn btn-success mt-2">Book a Table</a>
+                    </div>
+                </div>
+            </div>
+        `;
+        restaurantList.innerHTML += card;
+    });
+}
+
+    </script>
+</body>
+</html>

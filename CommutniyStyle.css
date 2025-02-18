@@ -1,0 +1,108 @@
+body {
+    background: linear-gradient(135deg, #0F3D2E, #1B6B50);
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar Styling */
+.navbar {
+    background: rgba(0, 0, 0, 0.8);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.navbar-brand {
+    font-size: 2rem;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.navbar-nav .nav-link {
+    color: #f8f9fa;
+    font-size: 1.1rem;
+    margin: 0 10px;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #FFD700;
+}
+
+/* Form Container Styling */
+.container {
+    max-width: 800px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 40px;
+    margin: 50px auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+h2 {
+    color: #183D33;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    color: #183D33;
+    font-weight: 600;
+}
+
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    transition: all 0.3s;
+}
+
+.form-control:focus {
+    border-color: #28a745;
+    box-shadow: 0 0 10px rgba(40, 167, 69, 0.5);
+}
+
+/* Buttons Styling */
+.btn-primary {
+    background: linear-gradient(135deg, #28a745, #218838);
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    transition: background 0.3s;
+}
+
+.btn-primary:hover {
+    scale: 1.05;
+}
+
+/* Post Cards Styling */
+.post-card {
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+}
+
+.post-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.like-btn:disabled {
+    background-color: #ddd;
+    border-color: #ddd;
+}
+
+/* Footer Styling */
+footer {
+    background: #000000; /* أسود بالكامل */
+    padding: 20px 0;
+    text-align: center;
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+footer a {
+    color: #ffd700; /* ذهبي */
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}

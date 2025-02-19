@@ -1,0 +1,43 @@
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const token = localStorage.getItem("authToken");
+        const navLinks = document.getElementById("nav-links");
+    
+        if (token) {
+            const decodedToken = parseJwt(token);
+            const userRole = decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+    
+            let adminLinks = "";
+            if (userRole === "Admin" || userRole === "RestaurantOwner") {
+                adminLinks = `<li class="nav-item"><a class="nav-link" href="addMenu.html">Add Menu Item</a></li>`;
+            }
+    
+            navLinks.innerHTML = `
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="Profile.html">Profile</a></li>
+                ${adminLinks}
+                <li class="nav-item"><button class="btn btn-danger ml-2" id="logout-btn">Logout</button></li>
+            `;
+    
+            document.getElementById("logout-btn").addEventListener("click", function () {
+                localStorage.removeItem("authToken");
+                window.location.href = "index.html";
+            });
+        } else {
+            navLinks.innerHTML = `
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="LoginPage.html">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="SignUpPage.html">Sign Up</a></li>
+            `;
+        }
+    });
+    
+    function parseJwt(token) {
+        try {
+            return JSON.parse(atob(token.split('.')[1]));
+        } catch (e) {
+            return {};
+        }
+    }
+    </script>
+    

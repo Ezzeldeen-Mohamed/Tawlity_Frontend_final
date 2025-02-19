@@ -36,23 +36,29 @@
 
     <!-- Main Container -->
     <div class="main-container">
-        <div class="container">
-            <h1 class="restaurant-title">Restaurant 1</h1>
-            <p class="restaurant-location"><strong>Location:</strong> Downtown City</p>
-            <img src="assets/images/restaurant1.jpg" class="img-fluid rounded shadow" alt="Restaurant Image">
-            <h3 class="menu-title">Menu</h3>
-            <ul class="menu-list">
-                <li><strong>Pasta:</strong> $10</li>
-                <li><strong>Pizza:</strong> $12</li>
-                <li><strong>Salad:</strong> $8</li>
-                <li><a href="restaurant-menu.html" class="view-more">View more <i class="fas fa-arrow-right"></i></a></li>
+        <div class="container mt-4">
+            <h1 class="restaurant-title" id="restaurantName">Loading...</h1>
+            <p class="restaurant-location"><strong>Location:</strong> <span id="restaurantLocation">Loading...</span></p>
+            <img id="restaurantImage" class="img-fluid rounded shadow" alt="Restaurant Image">
+            <h3 class="menu-title mt-4">Menu</h3>
+            <ul class="menu-list list-group" id="menuItems">
+                <p>Loading menu...</p>
             </ul>
+            
+            <!-- View More Link -->
+            <a href="#" id="viewMoreMenu" class="view-more btn btn-link">
+                View Full Menu <i class="fas fa-arrow-right"></i>
+            </a>
+            
+            <div id="loading-spinner" class="spinner-border text-primary my-3" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
 
             <!-- Reservation Card -->
-            <div class="reservation-card">
+            <div class="reservation-card card mt-4 p-3">
                 <h3>Reservation</h3>
                 <p>Plan your visit to enjoy our delicious offerings!</p>
-                <a href="reservation.html" class="btn btn-success btn-block">Reserve Now</a>
+                <a href="reservation.html" id="reserveNowBtn" class="btn btn-success btn-block">Reserve Now</a>
             </div>
         </div>
     </div>

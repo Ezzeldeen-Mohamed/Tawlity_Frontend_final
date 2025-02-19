@@ -209,7 +209,7 @@
     <div class="container">
         <h2 class="text-center">Featured Restaurants <a class="navbar-brand" href="nearstrestaurant.html"> Find nearest restaurant </a></h2>
 
-        <div class="row" id="restaurantList">
+        <div class="row" id="restaurantList">   
             <!-- Restaurant 1 -->
             <div class="col-md-4 restaurant-card" data-name="Restaurant 1">
                 <div class="card">
@@ -217,7 +217,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Restaurant 1</h5>
                         <p class="card-text">Best food in town!</p>
-                        <a href="Restaurant-Details-Page.html" class="btn btn-primary">View Details</a>
+                        <a href="Restaurant-Details-Page.html?id=${restaurant.id}" class="btn btn-primary">View Details</a>
                         <a href="Reservation.html" class="btn btn-success mt-2">Book a Table</a>
                     </div>
                 </div>
@@ -238,8 +238,11 @@
         <p>&copy; 2024 <a href="index.html" class="text-warning">Tawlity</a>. All rights reserved.</p>
     </footer>
 
+
+
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
+        
      document.addEventListener("DOMContentLoaded", function () {
     const token = localStorage.getItem("authToken");
     const navLinks = document.getElementById("nav-links");
@@ -296,38 +299,59 @@
             document.addEventListener("DOMContentLoaded", function () {
     fetchRestaurants(); // تحميل المطاعم عند فتح الصفحة
 });
+document.addEventListener("DOMContentLoaded", fetchRestaurants);
 
 function fetchRestaurants() {
     fetch("https://localhost:7039/api/Restaurant")
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(data => {
             displayRestaurants(data);
         })
-        .catch(error => console.error("Error fetching restaurants:", error));
+        .catch(error => {
+            console.error("Error fetching restaurants:", error);
+            document.getElementById("restaurantList").innerHTML = 
+                "<p class='text-danger text-center'>Failed to load restaurants. Please try again later.</p>";
+        });
 }
 
 function displayRestaurants(restaurants) {
     let restaurantList = document.getElementById("restaurantList");
-    restaurantList.innerHTML = ""; // تفريغ المحتوى السابق
+        restaurantList.innerHTML = ""; // Clear existing content
+
+    if (!restaurants || restaurants.length === 0) {
+        restaurantList.innerHTML = "<p class='text-center'>No restaurants found.</p>";
+        return;
+    }
 
     restaurants.forEach(restaurant => {
-        let card = `
-            <div class="col-md-4 restaurant-card" data-name="${restaurant.name}" data-description="${restaurant.description}">
-                <div class="card">
-                    <img class="card-img-top" src="./assets/images/restaurant1.jpg" alt="${restaurant.name}">
-                    <div class="card-body">
-                        <h5 class="card-title">${restaurant.name}</h5>
-                        <p class="card-text">${restaurant.description}</p>
-                        <a href="Restaurant-Details-Page.html?id=${restaurant.id}" class="btn btn-primary">View Details</a>
-                        <a href="Reservation.html?restaurantId=${restaurant.id}" class="btn btn-success mt-2">Book a Table</a>
-                    </div>
+        let card = document.createElement("div");
+        card.className = "col-md-4 restaurant-card";
+        card.dataset.name = restaurant.name;
+        card.dataset.description = restaurant.description;
+        // التأكد مما إذا كانت الصورة Base64 أو رابط مباشر
+        let imageSrc = restaurant.restaurantImage.startsWith("https") 
+                    ? restaurant.restaurantImage 
+                    : `data:image/jpeg;base64,${restaurant.restaurantImage}`;
+                    card.innerHTML = `
+            <div class="card">
+                <img class="card-img-top" src="${restaurant.restaurantImage || './assets/images/restaurant1.jpg'}" alt="${restaurant.name}" 
+                    onerror="this.onerror=null;this.src='./assets/images/restaurant1.jpg';">
+                <div class="card-body">
+                    <h5 class="card-title">${restaurant.name}</h5>
+                    <p class="card-text">${restaurant.description || "Delicious meals!"}</p>
+                    <a href="Restaurant-Details-Page.html?id=${restaurant.id}" class="btn btn-primary">View Details</a>
+                    <a href="Reservation.html?restaurantId=${restaurant.id}" class="btn btn-success mt-2">Book a Table</a>
                 </div>
             </div>
         `;
-        restaurantList.innerHTML += card;
+        restaurantList.appendChild(card);
     });
 }
-
-    </script>
+</script>
 </body>
 </html>

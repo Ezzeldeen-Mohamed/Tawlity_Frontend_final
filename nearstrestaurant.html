@@ -347,7 +347,8 @@ function displayRestaurants(restaurants, userLat, userLon) {
         let card = `
             <div class="col-md-4 restaurant-card" data-name="${restaurant.name}">
                 <div class="card">
-                    <img class="card-img-top" src="./assets/images/restaurant-placeholder.jpg" alt="${restaurant.name}">
+                    <img class="card-img-top" src="${restaurant.restaurantImage}" alt="${restaurant.name}" style="width: 320px; height: 150px; object-fit: cover; border-radius: 8px;"
+                                onerror="this.onerror=null;this.src='/assets/images/restaurant-6.jpeg';"> <!-- صورة افتراضية عند الخطأ -->>
                     <div class="card-body">
                         <h5 class="card-title">${restaurant.name}</h5>
                         <p class="card-text">${restaurant.address}</p>

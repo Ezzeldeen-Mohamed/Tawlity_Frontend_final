@@ -79,8 +79,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 setTimeout(() => {
                     if (role === "Admin") {
-                        window.location.href = "Admin_Dashbord.html";
-                    } else {
+                        window.location.href = "Admin_Dashbord.html"; // page for delete restaurant data and edit
+                    } 
+                    else if(role==="RestaurantOwner"){
+                        window.location.href = "Admin_Dashbord.html";  // page to edit restaurant data 
+                    }
+                    else {
                         window.location.href = "index.html";
                     }
                 }, 2000);

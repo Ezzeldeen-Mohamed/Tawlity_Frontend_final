@@ -196,53 +196,56 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="Restaurant-Details-Page.html">Restaurant Details</a></li>
+                <li class="nav-item">
+                    <a class="nav-link" id="restaurant-details-link" href="#">Restaurant Details</a>
+                </li>
                 <li class="nav-item"><a class="nav-link" href="Pyment.html">Payment</a></li>
             </ul>
         </div>
     </nav>
 
     <!-- Reservation Form -->
-   
-
-    <div class="container bg-white p-4 shadow rounded mt-4">
-        <h2 class="text-center text-primary">Book a Table</h2>
+    <div class="container">
+        <h2 class="text-center">Book a Table</h2>
         <form id="reservation-form">
             <div class="form-group">
+                <label for="employeeEmail">Employee Email:</label>
+                <input type="email" id="employeeEmail" name="employeeEmail" placeholder="email.address@gmail.com" class="form-control" required>
+            </div>
+            <div class="form-group">
                 <label for="restaurant">Select Restaurant:</label>
-                <select class="form-control" id="restaurant" name="restaurant" required></select>
+                <select id="restaurant" name="restaurant" class="form-control" required></select>
             </div>
             <div class="form-group">
                 <label for="date">Reservation Date:</label>
-                <input type="date" class="form-control" id="date" name="reservationDate" required>
+                <input type="date" id="date" name="reservationDate" class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="time">Reservation Time:</label>
-                <input type="time" class="form-control" id="time" name="reservationTime" required>
+                <input type="time" id="time" name="reservationTime" class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="people">Number of People:</label>
-                <input type="number" class="form-control" id="people" name="numPeople" min="1" required>
+                <input type="number" id="people" name="numPeople" min="1" placeholder="How many people will come?" class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="table">Select Table:</label>
-                <select class="form-control" id="table" name="table" required></select>
+                <select id="table" name="table" class="form-control" required></select>
             </div>
             <div class="form-group">
-                <label for="food">Select Food Items:</label>
-                <select multiple class="form-control" id="food" name="food[]" required></select>
-            </div>
-            <button type="submit" class="btn btn-primary btn-block">Book Now</button>
+                <label for="food">Select Food Item:</label>
+                <select id="food" name="food" class="form-control" required multiple ></select>
+            </div>            
+            <button type="submit" class="btn btn-primary">Book Now</button>
         </form>
     </div>
-    <!-- Custom Modal for Confirmation Message -->
-    <div id="custom-modal" class="custom-modal">
+    
+    <div id="custom-modal" class="custom-modal" style="display: none;">
         <div class="modal-content">
             <p id="modal-message">Thank you for booking with Tawlity! Your reservation has been confirmed. We look forward to serving you.</p>
             <button class="btn btn-primary" id="close-modal">OK</button>
         </div>
     </div>
-
 
     <!-- Footer -->
     <footer>
@@ -256,88 +259,123 @@
         </div>
         <p>&copy; 2024 <a href="index.html" class="text-warning">Tawlity</a>. All rights reserved.</p>
     </footer>
+
     <script>
-        document.addEventListener("DOMContentLoaded", async function () {
-            const urlParams = new URLSearchParams(window.location.search);
-            const restaurantId = urlParams.get("restaurantId");
-            
-            if (!restaurantId) {
-                alert("Invalid restaurant selection.");
-                window.location.href = "index.html";
-                return;
-            }
+       document.addEventListener("DOMContentLoaded", async function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const restaurantId = urlParams.get("restaurantId");
 
-            try {
-                const response = await fetch(`https://localhost:7039/api/Restaurant/with-menu/${restaurantId}`);
-                if (!response.ok) throw new Error("Failed to fetch restaurant data");
-                const restaurant = await response.json();
-                
-                document.getElementById("restaurant").innerHTML = `<option value="${restaurant.id}" selected>${restaurant.name}</option>`;
-                
-                let tablesHtml = '<option disabled selected>Select a table</option>';
-                restaurant.tables.forEach(table => {
-                    tablesHtml += `<option value="${table.id}">${table.name} - Capacity: ${table.capacity}</option>`;
-                });
-                document.getElementById("table").innerHTML = tablesHtml;
-                
-                let foodHtml = '';
-                restaurant.menuItems.forEach(item => {
-                    foodHtml += `<option value="${item.name}" data-price="${item.price}">${item.name} - $${item.price}</option>`;
-                });
-                document.getElementById("food").innerHTML = foodHtml;
-            } catch (error) {
-                alert("Error loading restaurant data. Please try again later.");
-                console.error(error);
-            }
+    if (!restaurantId) {
+        alert("Invalid restaurant selection.");
+        window.location.href = "index.html";
+        return;
+    }
+
+    try {
+        const response = await fetch(`https://localhost:7039/api/Restaurant/with-menu/${restaurantId}`);
+        if (!response.ok) throw new Error("Failed to fetch restaurant data");
+
+        const restaurant = await response.json();
+        document.getElementById("restaurant").innerHTML = `<option value="${restaurant.id}" selected>${restaurant.name}</option>`;
+
+        let tablesHtml = '<option disabled selected>Select a table</option>';
+        restaurant.tables.forEach(table => {
+            tablesHtml += `<option value="${table.id}">${table.name} - Capacity: ${table.capacity}</option>`;
         });
+        document.getElementById("table").innerHTML = tablesHtml;
 
-        document.getElementById("reservation-form").addEventListener("submit", async function (event) {
-            event.preventDefault();
-            
-            const token = localStorage.getItem("authToken");
-            if (!token) {
-                alert("You must be logged in to make a reservation.");
-                window.location.href = "Login.html";
-                return;
-            }
-
-            const formData = new FormData(event.target);
-            const reservationData = {
-                restaurantId: parseInt(formData.get("restaurant")),
-                tableId: parseInt(formData.get("table")),
-                reservationDate: formData.get("reservationDate"),
-                reservationTime: formData.get("reservationTime"),
-                peopleCount: parseInt(formData.get("numPeople")),
-                status: 1,
-                orderItems: Array.from(document.getElementById("food").selectedOptions).map(option => ({
-                    name: option.value,
-                    price: parseFloat(option.getAttribute("data-price"))
-                }))
-            };
-
-            try {
-                const response = await fetch("https://localhost:7039/api/Reservation", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${token}`
-                    },
-                    body: JSON.stringify(reservationData)
-                });
-                
-                if (response.ok) {
-                    alert("Reservation successful!");
-                    window.location.href = "Confirmation.html";
-                } else {
-                    const errorData = await response.json();
-                    alert(`Error: ${errorData.message || "Something went wrong"}`);
-                }
-            } catch (error) {
-                alert("Error submitting reservation. Please try again later.");
-                console.error(error);
-            }
+        let foodHtml = '';
+        restaurant.menuItems.forEach(item => {
+            foodHtml += `<option value="${item.name}" data-price="${item.price}">${item.name} - $${item.price}</option>`;
         });
-    </script>            
+        document.getElementById("food").innerHTML = foodHtml;
+
+    } catch (error) {
+        alert("Error loading restaurant data. Please try again later.");
+        console.error(error);
+    }
+});
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("reservation-form");
+    const modal = document.getElementById("custom-modal");
+    const modalMessage = document.getElementById("modal-message");
+    const closeModal = document.getElementById("close-modal");
+
+    form.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const reservationData = {
+            EmployeeEmail: document.getElementById("employeeEmail").value,
+            RestaurantId: document.getElementById("restaurant").value,
+            TableId: document.getElementById("table").value,
+            ReservationDate: document.getElementById("date").value,
+            ReservationTime: document.getElementById("time").value,
+            PeopleCount: document.getElementById("people").value,
+            OrderItems: Array.from(document.getElementById("food").selectedOptions).map(option => ({ Name: option.value }))
+        };
+
+        try {
+            const response = await fetch("https://localhost:7039/api/Reservation", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(reservationData)
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                modalMessage.textContent = result.message;
+                modal.style.display = "block";
+            } else {
+                alert("Error: " + result.message);
+            }
+        } catch (error) {
+            alert("An error occurred: " + error.message);
+        }
+    });
+
+    closeModal.addEventListener("click", function () {
+        modal.style.display = "none";
+    });
+
+    async function fetchOptions(url, selectElement) {
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            data.forEach(item => {
+                const option = document.createElement("option");
+                option.value = item.id;
+                option.textContent = item.name;
+                selectElement.appendChild(option);
+            });
+        } catch (error) {
+            console.error("Error loading options: ", error);
+        }
+    }
+
+    fetchOptions("https://localhost:7039/api/Restaurants", document.getElementById("restaurant"));
+    fetchOptions("https://localhost:7039/api/Tables", document.getElementById("table"));
+    fetchOptions("https://localhost:7039/api/Foods", document.getElementById("food"));
+});
+document.addEventListener("DOMContentLoaded", function () {
+    // الحصول على restaurantId من URL الحجز
+    const urlParams = new URLSearchParams(window.location.search);
+    const restaurantId = urlParams.get("restaurantId");
+
+    const detailsLink = document.getElementById("restaurant-details-link");
+
+    if (restaurantId) {
+        // تحديث الرابط بحيث يوجه المستخدم إلى صفحة التفاصيل الخاصة بالمطعم
+        detailsLink.href = `Restaurant-Details-Page.html?restaurantId=${restaurantId}`;
+    } else {
+        // في حالة عدم توفر restaurantId، يمكن إبقاء الرابط بدون توجيه
+        detailsLink.href = "#";
+        detailsLink.style.pointerEvents = "none"; // تعطيل النقر إذا لم يتم تحديد مطعم
+        detailsLink.style.color = "gray"; // إظهار أنه غير نشط
+    }
+});
+
+</script>
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

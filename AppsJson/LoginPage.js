@@ -5,15 +5,14 @@ document.addEventListener("DOMContentLoaded", function () {
         const modal = document.getElementById("custom-modal");
         const modalMessage = document.getElementById("modal-message");
 
-        modalMessage.textContent = message; // Show message
-        modal.style.display = "flex"; // Display modal
+        modalMessage.textContent = message;
+        modal.style.display = "flex";
     }
 
     document.getElementById("close-modal").addEventListener("click", function () {
         document.getElementById("custom-modal").style.display = "none";
     });
 
-    // Function to decode JWT token
     function parseJwt(token) {
         try {
             const base64Url = token.split(".")[1];
@@ -33,9 +32,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Handle Login Form Submission
     document.getElementById("login-form").addEventListener("submit", async function (e) {
-        e.preventDefault(); // Prevent default form submission
+        e.preventDefault();
 
         const email = document.getElementById("email").value.trim();
         const password = document.getElementById("password").value.trim();
@@ -63,27 +61,29 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             const data = await response.json();
+            if (!data || !data.token) {
+                throw new Error("Login successful but no token received.");
+            }
+
             console.log("Login successful, received token:", data.token);
 
-            // Store Token in LocalStorage
             localStorage.setItem("authToken", data.token);
 
-            // Decode the JWT token to get the user role
             const decodedToken = parseJwt(data.token);
             console.log("Decoded Token:", decodedToken);
 
             if (decodedToken && decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]) {
                 const role = decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
 
-                showModal(`Login successful! Redirecting...`);
+                showModal("Login successful! Redirecting...");
 
                 setTimeout(() => {
                     if (role === "Admin") {
-                        window.location.href = "Admin_Dashbord.html"; // page for delete restaurant data and edit
+                        window.location.href = "Admin_Dashbord.html";
                     } 
-                    else if(role==="RestaurantOwner"){
-                        window.location.href = "Admin_Dashbord.html";  // page to edit restaurant data 
-                    }
+                    else if (role === "RestaurantOwner") {
+                        window.location.href = "Owner_Dashboard.html";
+                    } 
                     else {
                         window.location.href = "index.html";
                     }
@@ -97,18 +97,16 @@ document.addEventListener("DOMContentLoaded", function () {
             showModal("Invalid email or password. Please try again.");
         }
     });
-});
-document.getElementById("togglePassword").addEventListener("click", function () {
-    let passwordField = document.getElementById("password");
-    let icon = this.querySelector("i");
 
-    if (passwordField.type === "password") {
-        passwordField.type = "text";
-        icon.classList.remove("fa-eye");
-        icon.classList.add("fa-eye-slash"); // 🔹 تغيير الأيقونة عند الإظهار
-    } else {
-        passwordField.type = "password";
-        icon.classList.remove("fa-eye-slash");
-        icon.classList.add("fa-eye"); // 🔹 تغيير الأيقونة عند الإخفاء
-    }
+    document.getElementById("togglePassword").addEventListener("click", function () {
+        let passwordField = document.getElementById("password");
+
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            this.innerHTML = '<i class="fa fa-eye-slash"></i>';
+        } else {
+            passwordField.type = "password";
+            this.innerHTML = '<i class="fa fa-eye"></i>';
+        }
+    });
 });

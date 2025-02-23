@@ -31,18 +31,17 @@ document.addEventListener("DOMContentLoaded", function () {
             return null;
         }
     }
-
     document.getElementById("login-form").addEventListener("submit", async function (e) {
         e.preventDefault();
-
+    
         const email = document.getElementById("email").value.trim();
         const password = document.getElementById("password").value.trim();
-
+    
         if (!email || !password) {
             showModal("Please fill in all required fields.");
             return;
         }
-
+    
         try {
             const response = await fetch("https://localhost:7039/api/Regester/login", {
                 method: "POST",
@@ -55,43 +54,46 @@ document.addEventListener("DOMContentLoaded", function () {
                     employeePassword: password 
                 })
             });
-
+    
             if (!response.ok) {
                 throw new Error("Invalid email or password. Please try again.");
             }
-
+    
             const data = await response.json();
             if (!data || !data.token) {
                 throw new Error("Login successful but no token received.");
             }
-
+    
             console.log("Login successful, received token:", data.token);
-
+    
             localStorage.setItem("authToken", data.token);
-
+    
             const decodedToken = parseJwt(data.token);
             console.log("Decoded Token:", decodedToken);
-
-            if (decodedToken && decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]) {
+    
+            if (decodedToken) {
+                // Extract User ID from Token
+                const userId = decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
+                localStorage.setItem("userId", userId); // Store in localStorage for later use
+    
+                console.log("Stored User ID:", userId);
+    
                 const role = decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
-
                 showModal("Login successful! Redirecting...");
-
+    
                 setTimeout(() => {
-                    if (role === "Admin") {
-                        window.location.href = "Admin_Dashbord.html";
-                    } 
-                    else if (role === "RestaurantOwner") {
-                        window.location.href = "Owner_Dashboard.html";
+                    // Redirect with User ID in URL
+                    if (role === "Admin" ||role === "RestaurantOwner") {
+                        window.location.href = `Admin_Dashbord.html?userId=${userId}`;
                     } 
                     else {
-                        window.location.href = "index.html";
+                        window.location.href = `index.html?userId=${userId}`;
                     }
                 }, 2000);
             } else {
-                showModal("Error retrieving role. Please try again.");
+                showModal("Error retrieving user data. Please try again.");
             }
-
+    
         } catch (error) {
             console.error("Login failed:", error);
             showModal("Invalid email or password. Please try again.");

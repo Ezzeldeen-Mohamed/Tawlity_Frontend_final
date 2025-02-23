@@ -243,43 +243,63 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
         
-     document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function () {
     const token = localStorage.getItem("authToken");
     const navLinks = document.getElementById("nav-links");
 
-    if (token) {
-        // If user is logged in, show profile & logout button
+    if (token && navLinks) {
+        const userId = getUserIdFromToken(token); // Extract User ID
+
+        if (!userId) {
+            console.warn("User ID is missing. Navigation may not work correctly.");
+        }
+
+        console.log("User ID Retrieved:", userId);
+
+        // Ensure userId is included only when available
+        const profileLink = userId ? `Profile.html?userId=${userId}` : "Profile.html";
+
+        // Update Navbar safely
         navLinks.innerHTML = `
-            <li class="nav-item"><a class="nav-link" href="Profile.html">My Profile</a></li>
+            <li class="nav-item"><a class="nav-link" href="${profileLink}">My Profile</a></li>
             <li class="nav-item"><a class="nav-link" href="Community.html">Community</a></li>
             <li class="nav-item"><button class="btn btn-danger ml-2" id="logout-btn">Logout</button></li>
         `;
 
-        // Add logout event listener
+        // Logout Functionality
         document.getElementById("logout-btn").addEventListener("click", function () {
-            document.getElementById("logout-confirmation-modal").style.display = "flex"; // Show confirmation modal
+            document.getElementById("logout-confirmation-modal").style.display = "flex"; // Show modal
         });
 
-        // Handle confirm logout
         document.getElementById("confirm-logout").addEventListener("click", function () {
-            localStorage.removeItem("authToken"); // Remove token
+            localStorage.removeItem("authToken");
+            localStorage.removeItem("userId");
             window.location.href = "index.html"; // Redirect to home page
         });
-
-        // Handle cancel logout
-        document.getElementById("cancel-logout").addEventListener("click", function () {
-            document.getElementById("logout-confirmation-modal").style.display = "none"; // Hide modal
-        });
-
-    } else {
-        // If not logged in, show login & sign-up links
-        navLinks.innerHTML = `
-            <li class="nav-item"><a class="nav-link" href="LoginPage.html">Login</a></li>
-            <li class="nav-item"><a class="nav-link" href="SignUpPage.html">Sign Up</a></li>
-            <li class="nav-item"><a class="nav-link" href="Community.html">Community</a></li>
-        `;
     }
 });
+
+/**
+ * Extract User ID from JWT Token
+ */
+function getUserIdFromToken(token) {
+    try {
+        const base64Url = token.split(".")[1];
+        const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+        const jsonPayload = decodeURIComponent(
+            atob(base64)
+                .split("")
+                .map(c => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+                .join("")
+        );
+        const decodedToken = JSON.parse(jsonPayload);
+        return decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
+    } catch (error) {
+        console.error("Error decoding token:", error);
+        return null;
+    }
+}
+
             // Search functionality
             document.getElementById("searchInput").addEventListener("input", function () {
                 const searchQuery = this.value.toLowerCase();

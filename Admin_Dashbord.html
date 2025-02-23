@@ -245,17 +245,36 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        // Example of dynamically loading data via API (Simulated)
-        $(document).ready(function() {
-            // Simulating an API call with setTimeout to load the data dynamically
-            setTimeout(function() {
-                // These values would come from your backend or API
-                $("#total-restaurants").text(15);
-                $("#total-reservations").text(120);
-                $("#total-reviews").text(250);
-                $("#active-promotions").text(5);
-            }, 1000);  // Simulating an API call delay
+    $(document).ready(function() {
+        // Simulating other admin stats loading
+        setTimeout(function() {
+            $("#total-reviews").text(250);
+            $("#active-promotions").text(5);
+        }, 1000); // Simulating API delay for other stats
+
+        // Fetch total reservations from API
+        $.ajax({
+            url: "https://localhost:7039/api/Reservation",
+            method: "GET",
+            success: function(data) {
+                $("#total-reservations").text(data.length); // عدد الحجوزات
+            },
+            error: function() {
+                $("#total-reservations").text("Error loading data");
+            }
         });
-    </script>
+            // Fetch real restaurant count from API
+            $.ajax({
+                url: "https://localhost:7039/api/Restaurant",
+                method: "GET",
+                success: function(data) {
+                    $("#total-restaurants").text(data.length); // عدد المطاعم
+                },
+                error: function() {
+                    $("#total-restaurants").text("Error loading data");
+                }
+            });
+        });
+    </script>    
 </body>
 </html>

@@ -179,8 +179,11 @@
             <div class="card mb-3 post-card">
                 <div class="card-body">
                     <h5 class="card-title text-dark">John Doe</h5>
-                    <p class="card-text text-dark">Amazing food at Restaurant 1! <a href="Restaurant-Details-Page.html" class="text-primary">Visit Restaurant</a></p>
-                    <small class="text-muted">Posted on 10/10/2024</small>
+                    <p class="card-text text-dark">
+                        Amazing food at Restaurant 1! 
+                        <a href="Restaurant-Details-Page.html?id=1" class="text-primary">Visit Restaurant</a>
+                    </p>
+                    <small class="text-muted" id="post-date"></small>
                     <div class="mt-2 d-flex justify-content-between align-items-center">
                         <div>
                             <div class="reaction-container">
@@ -236,6 +239,14 @@
         <p>&copy; 2024 <a href="index.html" class="text-warning">Tawlity</a>. All rights reserved.</p>
     </footer>
     <script>
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var now = new Date();  // Get current date and time
+        var formattedDate = now.toLocaleString();  // Format it (adjust as needed)
+        document.getElementById("post-date").textContent = "Posted on " + formattedDate;
+       });
+
         // Handle Logout Link Click
         document.querySelector('.nav-link[href="logout.html"]').addEventListener('click', function (e) {
             e.preventDefault(); // Prevent default link behavior

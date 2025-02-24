@@ -1,15 +1,23 @@
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("edit-profile-form");
 
+    // Function to get query parameters
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
+
+    // Extract userId from URL (Make it accessible globally inside this event listener)
+    const userId = getQueryParam("userId");
+
+    if (!userId) {
+        alert("User ID missing in URL!");
+        window.location.href = "index.html"; // Redirect if no user ID
+        return;
+    }
+
     // Load current user details
     async function loadUserProfile() {
-        const userId = localStorage.getItem("userId"); // Retrieve user ID from storage
-        if (!userId) {
-            alert("User not logged in!");
-            window.location.href = "index.html"; // Redirect to home
-            return;
-        }
-
         try {
             const response = await fetch(`https://localhost:7039/api/UserProfile/${userId}`);
             if (!response.ok) throw new Error("User not found");
@@ -17,12 +25,13 @@ document.addEventListener("DOMContentLoaded", function () {
             const user = await response.json();
 
             // Fill the form with user data
-            document.getElementById("name").value = user.fullName;
-            document.getElementById("email").value = user.email;
-            document.getElementById("address").value = user.address;
+            document.getElementById("name").value = user.employeeName;
+            document.getElementById("phone").value = user.employeePhone;
+            document.getElementById("city").value = user.employeeCity; // Pre-select the correct city
 
         } catch (error) {
             console.error("Error loading user data:", error);
+            alert("Error loading user data.");
         }
     }
 
@@ -30,13 +39,10 @@ document.addEventListener("DOMContentLoaded", function () {
     form.addEventListener("submit", async function (event) {
         event.preventDefault();
 
-        const userId = localStorage.getItem("userId");
-        if (!userId) return;
-
         const updatedUser = {
-            fullName: document.getElementById("name").value,
-            email: document.getElementById("email").value,
-            address: document.getElementById("address").value,
+            EmployeeName: document.getElementById("name").value,
+            EmployeePhone: document.getElementById("phone").value,
+            EmployeeCity: parseInt(document.getElementById("city").value), // Convert to int
         };
 
         try {
@@ -51,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!response.ok) throw new Error("Failed to update profile");
 
             alert("Profile updated successfully!");
-            window.location.href = "Profile.html"; // Redirect back
+            window.location.href = `Profile.html?userId=${userId}`; // Redirect back
 
         } catch (error) {
             console.error("Error updating profile:", error);
@@ -59,5 +65,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    loadUserProfile(); // Load user data when the page loads
+    // Call function to load user data when the page loads
+    loadUserProfile();
 });

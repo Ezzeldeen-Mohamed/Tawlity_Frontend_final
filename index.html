@@ -246,42 +246,52 @@
         document.addEventListener("DOMContentLoaded", function () {
     const token = localStorage.getItem("authToken");
     const navLinks = document.getElementById("nav-links");
+    const logoutModal = document.getElementById("logout-confirmation-modal");
 
     if (token && navLinks) {
-        const userId = getUserIdFromToken(token); // Extract User ID
-
-        if (!userId) {
-            console.warn("User ID is missing. Navigation may not work correctly.");
-        }
+        const userId = getUserIdFromToken(token);
 
         console.log("User ID Retrieved:", userId);
 
-        // Ensure userId is included only when available
         const profileLink = userId ? `Profile.html?userId=${userId}` : "Profile.html";
 
-        // Update Navbar safely
         navLinks.innerHTML = `
             <li class="nav-item"><a class="nav-link" href="${profileLink}">My Profile</a></li>
             <li class="nav-item"><a class="nav-link" href="Community.html">Community</a></li>
             <li class="nav-item"><button class="btn btn-danger ml-2" id="logout-btn">Logout</button></li>
         `;
 
-        // Logout Functionality
+        // Add event listener for logout button
         document.getElementById("logout-btn").addEventListener("click", function () {
-            document.getElementById("logout-confirmation-modal").style.display = "flex"; // Show modal
+            logoutModal.style.display = "flex"; // Show logout modal
         });
 
+        // Confirm logout
         document.getElementById("confirm-logout").addEventListener("click", function () {
             localStorage.removeItem("authToken");
             localStorage.removeItem("userId");
-            window.location.href = "index.html"; // Redirect to home page
+
+            logoutModal.style.display = "none"; // Hide modal before redirecting
+
+            setTimeout(() => {
+                window.location.href = "index.html"; // Redirect to home page after logout
+            }, 500); // Small delay to ensure modal closes before redirect
         });
+
+        // Cancel logout
+        document.getElementById("cancel-logout").addEventListener("click", function () {
+            logoutModal.style.display = "none"; // Close modal
+        });
+    } else {
+        navLinks.innerHTML = `
+            <li class="nav-item"><a class="nav-link" href="Community.html">Community</a></li>
+            <li class="nav-item"><a class="nav-link" href="LoginPage.html">Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="SignUpPage.html">Register</a></li>
+        `;
     }
 });
 
-/**
- * Extract User ID from JWT Token
- */
+// Function to extract user ID from JWT
 function getUserIdFromToken(token) {
     try {
         const base64Url = token.split(".")[1];

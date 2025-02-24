@@ -26,35 +26,32 @@
         </div>
     </nav>
 
-    <!-- Profile Section -->
-    <div class="container mt-5">
+       <!-- Profile Section -->
+       <div class="container mt-5">
         <h2 class="text-center">My Profile</h2>
         <div class="row mt-4 profile-info">
             <!-- User Info -->
             <div class="col-md-4 text-center">
                 <img src="./assets/images/user-avatarr.jpeg" alt="User Avatar" class="img-fluid rounded-circle profile-img mb-3">
-                <h4>John Doe</h4>
-                <p>Email: john.doe@example.com</p>
-                <p>Address: 123 Main Street, Cityville</p>
+                <h4 id="profile-name">Loading...</h4>
+                <p id="profile-email">Email: Loading...</p>
+                <p id="profile-address">Address: Loading...</p>
             </div>
 
             <!-- Profile Actions -->
             <div class="col-md-8">
                 <h5>Reservation History:</h5>
-                <ul class="list-group mb-4">
-                    <li class="list-group-item">Restaurant 1 - 25/10/2024</li>
-                    <li class="list-group-item">Restaurant 2 - 12/11/2024</li>
-                    <li class="list-group-item">Restaurant 3 - 18/12/2024</li>
+                <ul class="list-group mb-4" id="reservation-list">
+                    <li class="list-group-item">Loading reservations...</li>
                 </ul>
                 <div class="profile-actions">
-                    <a href="EditProfile.html" class="btn btn-primary">Edit Profile</a>
-                    <a href="DeleteProfile.html" class="btn btn-danger ml-2">Delete Account</a>
+                    <a id="edit-profile-btn" href="#" class="btn btn-primary">Edit Profile</a>
+                    <button class="btn btn-danger ml-2" id="logout-btn">Logout</button>
                 </div>
             </div>
         </div>
     </div>
-
-   
+    
     <!-- Footer -->
     <footer>
         <div class="social-icons">

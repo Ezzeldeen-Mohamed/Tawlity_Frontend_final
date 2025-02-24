@@ -1,35 +1,81 @@
-  // Load Profile Data from Local Storage
-  document.addEventListener('DOMContentLoaded', function () {
-    const name = localStorage.getItem('profileName') || 'John Doe'; // Default value if not found
-    const email = localStorage.getItem('profileEmail') || 'john.doe@example.com'; // Default value if not found
-    const address = localStorage.getItem('profileAddress') || '123 Main Street, Cityville'; // Default value if not found
+document.addEventListener("DOMContentLoaded", async function () {
+  const token = localStorage.getItem("authToken");
+  const userId = localStorage.getItem("userId");
 
-    // Update Profile Info
-    document.querySelector('.profile-info h4').textContent = name;
-    document.querySelector('.profile-info p:nth-of-type(1)').textContent = `Email: ${email}`;
-    document.querySelector('.profile-info p:nth-of-type(2)').textContent = `Address: ${address}`;
-});
+  if (!token || !userId) {
+      window.location.href = "Login.html"; // Redirect to login if not authenticated
+      return;
+  }
 
+  const apiUrl = `https://localhost:7039/api/User/Profile/${userId}`;
+  
+  try {
+      const response = await fetch(apiUrl, {
+          headers: {
+              "Authorization": `Bearer ${token}`,
+              "Content-Type": "application/json"
+          }
+      });
 
+      if (!response.ok) {
+          throw new Error(`Failed to fetch profile data (Status: ${response.status})`);
+      }
 
-//////////////////////////////////////////////////////////////////////////////////////
+      const data = await response.json();
 
+      // ✅ Update Profile Info
+      document.getElementById("profile-name").textContent = data.fullName;
+      document.getElementById("profile-email").textContent = `Email: ${data.email}`;
+      document.getElementById("profile-address").textContent = `Address: ${data.address}`;
 
-  // Logout Button Functionality
-  document.getElementById('logout-btn').addEventListener('click', function (e) {
-    e.preventDefault(); // Prevent default link behavior
+      // ✅ Update Reservation History
+      const reservationList = document.getElementById("reservation-list");
+      reservationList.innerHTML = ""; // Clear previous entries
 
-    // Show the custom modal
-    document.getElementById('custom-modal').style.display = 'flex';
-});
+      if (data.reservationsForProfile?.length > 0) {
+          data.reservationsForProfile.forEach(reservation => {
+              const listItem = document.createElement("li");
+              listItem.className = "list-group-item";
+              listItem.textContent = `${reservation.restaurantName} - ${new Date(reservation.reservationDate).toLocaleDateString("en-GB")}`;
+              reservationList.appendChild(listItem);
+          });
+      } else {
+          reservationList.innerHTML = "<li class='list-group-item text-muted'>No reservations found.</li>";
+      }
 
-// Close Modal
-document.getElementById('close-modal').addEventListener('click', function () {
-    document.getElementById('custom-modal').style.display = 'none';
-});
+      // ✅ Update the "Edit Profile" button with userId in URL
+      document.getElementById("edit-profile-btn").href = `EditProfile.html?userId=${userId}`;
 
-// Confirm Logout
-document.getElementById('confirm-logout').addEventListener('click', function () {
-    // Redirect to home page
-    window.location.href = "index.html";
+  } catch (error) {
+      console.error("Error loading profile:", error);
+      document.getElementById("profile-name").textContent = "Error loading profile";
+      document.getElementById("reservation-list").innerHTML = "<li class='list-group-item text-danger'>Error fetching reservations.</li>";
+  }
+
+  // 🔹 Logout Functionality
+  document.getElementById("logout-btn").addEventListener("click", () => {
+      document.getElementById("logout-confirmation-modal").style.display = "flex"; // Show modal
+  });
+
+  document.getElementById("confirm-logout").addEventListener("click", () => {
+      localStorage.removeItem("authToken");
+      localStorage.removeItem("userId");
+
+      // Reset Navbar Links
+      const navLinks = document.getElementById("nav-links");
+      if (navLinks) {
+          navLinks.innerHTML = `
+              <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+              <li class="nav-item"><a class="nav-link" href="Login.html">Login</a></li>
+              <li class="nav-item"><a class="nav-link" href="Register.html">Sign Up</a></li>
+          `;
+      }
+
+      document.getElementById("logout-confirmation-modal").style.display = "none";
+      window.location.href = "index.html"; // Redirect to home page
+  });
+
+  document.getElementById("cancel-logout").addEventListener("click", () => {
+      document.getElementById("logout-confirmation-modal").style.display = "none";
+  });
 });

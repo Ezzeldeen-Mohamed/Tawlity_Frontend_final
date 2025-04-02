@@ -1,81 +1,110 @@
 document.addEventListener("DOMContentLoaded", async function () {
-  const token = localStorage.getItem("authToken");
-  const userId = localStorage.getItem("userId");
+    const token = localStorage.getItem("authToken");
+    const userId = localStorage.getItem("userId");
 
-  if (!token || !userId) {
-      window.location.href = "Login.html"; // Redirect to login if not authenticated
-      return;
-  }
+    if (!token || !userId) {
+        window.location.href = "Login.html"; // إعادة التوجيه إذا لم يكن المستخدم مسجلاً للدخول
+        return;
+    }
 
-  const apiUrl = `https://tawlityweb.runasp.net/api/User/Profile/${userId}`;
-  
-  try {
-      const response = await fetch(apiUrl, {
-          headers: {
-              "Authorization": `Bearer ${token}`,
-              "Content-Type": "application/json"
-          }
-      });
+    const apiUrl = `https://tawlityweb.runasp.net/api/User/Profile/${userId}`;
 
-      if (!response.ok) {
-          throw new Error(`Failed to fetch profile data (Status: ${response.status})`);
-      }
+    try {
+        const response = await fetch(apiUrl, {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        });
 
-      const data = await response.json();
+        if (!response.ok) {
+            throw new Error(`Failed to fetch profile data (Status: ${response.status})`);
+        }
 
-      // ✅ Update Profile Info
-      document.getElementById("profile-name").textContent = data.fullName;
-      document.getElementById("profile-email").textContent = `Email: ${data.email}`;
-      document.getElementById("profile-address").textContent = `Address: ${data.address}`;
+        const data = await response.json();
 
-      // ✅ Update Reservation History
-      const reservationList = document.getElementById("reservation-list");
-      reservationList.innerHTML = ""; // Clear previous entries
+        // ✅ تحديث بيانات الملف الشخصي
+        document.getElementById("profile-name").textContent = data.fullName;
+        document.getElementById("profile-email").textContent = `Email: ${data.email}`;
+        document.getElementById("profile-address").textContent = `Address: ${data.address}`;
 
-      if (data.reservationsForProfile?.length > 0) {
-          data.reservationsForProfile.forEach(reservation => {
-              const listItem = document.createElement("li");
-              listItem.className = "list-group-item";
-              listItem.textContent = `${reservation.restaurantName} - ${new Date(reservation.reservationDate).toLocaleDateString("en-GB")}`;
-              reservationList.appendChild(listItem);
-          });
-      } else {
-          reservationList.innerHTML = "<li class='list-group-item text-muted'>No reservations found.</li>";
-      }
+        // ✅ تحديث قائمة الحجوزات
+        const reservationList = document.getElementById("reservation-list");
+        reservationList.innerHTML = "";
 
-      // ✅ Update the "Edit Profile" button with userId in URL
-      document.getElementById("edit-profile-btn").href = `EditProfile.html?userId=${userId}`;
+        if (data.reservationForProfiles?.length > 0) {
+            data.reservationForProfiles.forEach(reservation => {
+                const listItem = document.createElement("li");
+                listItem.className = "list-group-item";
 
-  } catch (error) {
-      console.error("Error loading profile:", error);
-      document.getElementById("profile-name").textContent = "Error loading profile";
-      document.getElementById("reservation-list").innerHTML = "<li class='list-group-item text-danger'>Error fetching reservations.</li>";
-  }
+                const formattedDate = new Date(reservation.reservationDate).toLocaleDateString("en-GB", {
+                    day: "2-digit",
+                    month: "long",
+                    year: "numeric"
+                });
 
-  // 🔹 Logout Functionality
-  document.getElementById("logout-btn").addEventListener("click", () => {
-      document.getElementById("logout-confirmation-modal").style.display = "flex"; // Show modal
-  });
+                listItem.textContent = `${reservation.restaurantName} - ${formattedDate}`;
+                reservationList.appendChild(listItem);
+            });
+        } else {
+            reservationList.innerHTML = "<li class='list-group-item text-muted'>No reservations found.</li>";
+        }
 
-  document.getElementById("confirm-logout").addEventListener("click", () => {
-      localStorage.removeItem("authToken");
-      localStorage.removeItem("userId");
+        // ✅ تحديث رابط تعديل الملف الشخصي
+        document.getElementById("edit-profile-btn").href = `EditProfile.html?userId=${userId}`;
 
-      // Reset Navbar Links
-      const navLinks = document.getElementById("nav-links");
-      if (navLinks) {
-          navLinks.innerHTML = `
-              <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-              <li class="nav-item"><a class="nav-link" href="Login.html">Login</a></li>
-              <li class="nav-item"><a class="nav-link" href="Register.html">Sign Up</a></li>
-          `;
-      }
+    } catch (error) {
+        console.error("Error loading profile:", error);
+        document.getElementById("profile-name").textContent = "Error loading profile";
+        document.getElementById("reservation-list").innerHTML = "<li class='list-group-item text-danger'>Error fetching reservations.</li>";
+    }
 
-      document.getElementById("logout-confirmation-modal").style.display = "none";
-      window.location.href = "index.html"; // Redirect to home page
-  });
+    // ✅ التحقق من وجود الأزرار قبل إضافة الأحداث لتجنب الأخطاء
+    const logoutBtnNavbar = document.getElementById("logout-btn");
+    const logoutBtnProfile = document.getElementById("profile-logout-btn");
+    const confirmLogoutBtn = document.getElementById("confirm-logout");
+    const closeModalBtn = document.getElementById("close-modal");
+    const modal = document.getElementById("custom-modal");
 
-  document.getElementById("cancel-logout").addEventListener("click", () => {
-      document.getElementById("logout-confirmation-modal").style.display = "none";
-  });
+    if (logoutBtnNavbar||logoutBtnProfile) {
+        logoutBtnNavbar.addEventListener("click", () => {
+            modal.style.display = "flex"; // إظهار المودال
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const logoutBtnProfile = document.getElementById("profile-logout-btn");
+        if (logoutBtnProfile) {
+            logoutBtnProfile.addEventListener("click", () => {
+                document.getElementById("custom-modal").style.display = "flex"; // إظهار المودال
+            });
+        }
+    });
+    
+
+    if (confirmLogoutBtn) {
+        confirmLogoutBtn.addEventListener("click", () => {
+            localStorage.removeItem("authToken");
+            localStorage.removeItem("userId");
+
+            // تحديث الروابط في النافبار إذا كان موجودًا
+            const navLinks = document.getElementById("nav-links");
+            if (navLinks) {
+                navLinks.innerHTML = `
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="Login.html">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="Register.html">Sign Up</a></li>
+                `;
+            }
+
+            modal.style.display = "none";
+            window.location.href = "index.html"; // إعادة التوجيه إلى الصفحة الرئيسية
+        });
+    }
+
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener("click", () => {
+            modal.style.display = "none"; // إخفاء المودال عند الإلغاء
+        });
+    }
 });

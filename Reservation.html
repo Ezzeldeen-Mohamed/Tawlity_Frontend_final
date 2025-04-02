@@ -275,7 +275,7 @@
     }
 
     try {
-        const response = await fetch(`https://localhost:7039/api/Restaurant/with-menu/${restaurantId}`);
+        const response = await fetch(`https://tawlityweb.runasp.net/api/Restaurant/with-menu/${restaurantId}`);
         if (!response.ok) throw new Error("Failed to fetch restaurant data");
 
         const restaurant = await response.json();
@@ -318,7 +318,7 @@ document.addEventListener("DOMContentLoaded", function () {
         };
 
         try {
-            const response = await fetch("https://localhost:7039/api/Reservation", {
+            const response = await fetch("https://tawlityweb.runasp.net/api/Reservation", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(reservationData)
@@ -357,9 +357,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    fetchOptions("https://localhost:7039/api/Restaurants", document.getElementById("restaurant"));
-    fetchOptions("https://localhost:7039/api/Tables", document.getElementById("table"));
-    fetchOptions("https://localhost:7039/api/Foods", document.getElementById("food"));
+    fetchOptions("https://tawlityweb.runasp.net/api/Restaurants", document.getElementById("restaurant"));
+    fetchOptions("https://tawlityweb.runasp.net/api/Tables", document.getElementById("table"));
+    fetchOptions("https://tawlityweb.runasp.net/api/Foods", document.getElementById("food"));
 });
 document.addEventListener("DOMContentLoaded", function () {
     // الحصول على restaurantId من URL الحجز

@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       return;
   }
 
-  const apiUrl = `https://localhost:7039/api/User/Profile/${userId}`;
+  const apiUrl = `https://tawlityweb.runasp.net/api/User/Profile/${userId}`;
   
   try {
       const response = await fetch(apiUrl, {

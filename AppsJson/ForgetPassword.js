@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         try {
-            const response = await fetch("https://localhost:7039/api/Regester/forgot-password", {
+            const response = await fetch("https://tawlityweb.runasp.net/api/Regester/forgot-password", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Load current user details
     async function loadUserProfile() {
         try {
-            const response = await fetch(`https://localhost:7039/api/UserProfile/${userId}`);
+            const response = await fetch(`https://tawlityweb.runasp.net/api/UserProfile/${userId}`);
             if (!response.ok) throw new Error("User not found");
 
             const user = await response.json();
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
         };
 
         try {
-            const response = await fetch(`https://localhost:7039/api/User/UpdateUser/${userId}`, {
+            const response = await fetch(`https://tawlityweb.runasp.net/api/User/UpdateUser/${userId}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

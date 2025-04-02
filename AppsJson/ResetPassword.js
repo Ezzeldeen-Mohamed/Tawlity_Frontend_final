@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         try {
-            const response = await fetch(`https://localhost:7039/api/Regester/reset-password/${token}`, {
+            const response = await fetch(`https://tawlity.netlify.app/api/Regester/reset-password/${token}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

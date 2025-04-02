@@ -65,7 +65,7 @@
             }
 
             try {
-                const response = await fetch(`https://localhost:7039/api/Restaurant/with-menu/${restaurantId}`);
+                const response = await fetch(`https://tawlityweb.runasp.net/api/Restaurant/with-menu/${restaurantId}`);
 
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);

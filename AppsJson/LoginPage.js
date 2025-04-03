@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     
         try {
-            const response = await fetch("https://tawlityweb.runasp.net/api/Regester/login", {
+            const response = await fetch("https://tawlity.runasp.net/api/Regester/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

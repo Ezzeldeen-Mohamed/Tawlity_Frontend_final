@@ -291,7 +291,7 @@ function getRoleString(roleValue) {
 
 // ** جلب المستخدمين وعرضهم **
 function fetchUsers() {
-    fetch("https://tawlityweb.runasp.net/api/User", {
+    fetch("https://tawlity.runasp.net/api/User", {
         method: "GET",
         headers: {
             "Authorization": `Bearer ${token}`,
@@ -394,7 +394,7 @@ $(document).on("click", ".edit-btn", function () {
 
         console.log("Updating User:", updatedUser);
 
-        fetch(`https://tawlityweb.runasp.net/api/User/${userId}`, {
+        fetch(`https://tawlity.runasp.net/api/User/${userId}`, {
             method: "PUT",
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem("authToken")}`,
@@ -451,7 +451,7 @@ $(document).ready(function () {
                 if (result.isConfirmed) {
                     const token = localStorage.getItem("authToken"); // Retrieve the token from localStorage
 
-                    fetch(`https://tawlityweb.runasp.net/api/User/${userId}`, {  // Using the correct API URL with the user ID
+                    fetch(`https://tawlity.runasp.net/api/User/${userId}`, {  // Using the correct API URL with the user ID
                         method: "DELETE",
                         headers: {
                             "Authorization": `Bearer ${token}`, // Send token in the request header

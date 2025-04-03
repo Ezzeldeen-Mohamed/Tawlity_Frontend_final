@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", async function () {
-    const API_BASE_URL = "https://tawlityweb.runasp.net/api/Regester";
+    const API_BASE_URL = "https://tawlity.runasp.net/api/Regester";
 
     
     // Populate dropdowns with enum values

@@ -283,7 +283,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // ✅ جلب المطاعم بناءً على الموقع
 function getNearbyRestaurants(lat, lon, radius = 10) {
-    fetch(`https://tawlityweb.runasp.net/api/Restaurant/nearby?lat=${lat}&lon=${lon}&radius=${radius}`)
+    fetch(`https://tawlity.runasp.net/api/Restaurant/nearby?lat=${lat}&lon=${lon}&radius=${radius}`)
         .then(response => response.json())
         .then(data => {
             if (data.length === 0) {

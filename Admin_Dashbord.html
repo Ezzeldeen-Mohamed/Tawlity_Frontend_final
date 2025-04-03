@@ -269,7 +269,7 @@
 
     // Fetch total reservations from API
     $.ajax({
-        url: "https://tawlityweb.runasp.net/api/Reservation",
+        url: "https://tawlity.runasp.net/api/Reservation",
         method: "GET",
         success: function (data) {
             $("#total-reservations").text(data.length); // عدد الحجوزات
@@ -281,7 +281,7 @@
 
     // Fetch real restaurant count from API
     $.ajax({
-        url: "https://tawlityweb.runasp.net/api/Restaurant",
+        url: "https://tawlity.runasp.net/api/Restaurant",
         method: "GET",
         success: function (data) {
             $("#total-restaurants").text(data.length); // عدد المطاعم

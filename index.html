@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home | Tawlity</title>
+    <link rel="icon" href="./assets/images/Log tawilaty.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
         /* General Styles */
@@ -115,21 +117,57 @@
         }
 
         /* Footer Styles */
+        
+        
         footer {
             background: rgba(0, 0, 0, 0.9);
-            padding: 20px 0;
+            padding: 25px 0;
             text-align: center;
-            color: #fff;
+            color: var(--light-color);
+            font-size: 0.95rem;
+            margin-top: auto;
+        }
+
+        .social-icons {
+            z-index: 1;
+            color: #f8f9fa;
+            margin-bottom: 15px;
+        }
+
+        .social-icons a {
+            z-index: 1;
+            color: var(--light-color);
+            font-size: 1.2rem;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .social-icons a:hover {
+            color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        .footer-links {
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: var(--light-color);
+            text-decoration: none;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #FFA500;
+            text-decoration: underline;
+        }
+
+        .copyright {
             font-size: 0.9rem;
         }
 
-        footer a {
-            color: #FFD700;
-            text-decoration: none;
-        }
-        footer a:hover {
-            text-decoration: underline;
-        }
         /* Modal Background Overlay */
 .custom-modal {
     position: fixed;
@@ -227,71 +265,92 @@
 
     <!-- Footer -->
     <footer>
-        <div class="social-icons">
-            <a href="#" class="text-light"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" class="text-light"><i class="fab fa-twitter"></i></a>
-            <a href="#" class="text-light"><i class="fab fa-instagram"></i></a>
+        <div class="containers">
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>  
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <div class="footer-links">
+                <a href="contact.html">Contact Us</a>
+                <a href="AboutUs.html">About</a>
+                <a href=".html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+            </div>
+            <p class="copyright">&copy; 2024 <a href="index.html" style="color:#ffbe3b">Tawlity</a>. All rights reserved.</p>
         </div>
-        <div class="footer-links mt-3">
-            <a href="ContactUs.html">Contact Us</a> | <a href="AboutUs.html">About</a>
-        </div>
-        <p>&copy; 2024 <a href="index.html" class="text-warning">Tawlity</a>. All rights reserved.</p>
     </footer>
-
-
+        
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
-        
-        document.addEventListener("DOMContentLoaded", function () {
+ document.addEventListener("DOMContentLoaded", function () {
     const token = localStorage.getItem("authToken");
     const navLinks = document.getElementById("nav-links");
-    const logoutModal = document.getElementById("logout-confirmation-modal");
 
     if (token && navLinks) {
-        const userId = getUserIdFromToken(token);
+        const userId = getUserIdFromToken(token); // Extract User ID
+
+        if (!userId) {
+            console.warn("User ID is missing. Navigation may not work correctly.");
+        }
 
         console.log("User ID Retrieved:", userId);
 
+        // Ensure userId is included only when available
         const profileLink = userId ? `Profile.html?userId=${userId}` : "Profile.html";
 
+        // Update Navbar safely
         navLinks.innerHTML = `
             <li class="nav-item"><a class="nav-link" href="${profileLink}">My Profile</a></li>
             <li class="nav-item"><a class="nav-link" href="Community.html">Community</a></li>
             <li class="nav-item"><button class="btn btn-danger ml-2" id="logout-btn">Logout</button></li>
         `;
 
-        // Add event listener for logout button
+        // Logout Functionality
         document.getElementById("logout-btn").addEventListener("click", function () {
-            logoutModal.style.display = "flex"; // Show logout modal
+            document.getElementById("logout-confirmation-modal").style.display = "flex"; // Show modal
         });
 
-        // Confirm logout
         document.getElementById("confirm-logout").addEventListener("click", function () {
+            // ✅ Remove authentication data
             localStorage.removeItem("authToken");
             localStorage.removeItem("userId");
 
-            logoutModal.style.display = "none"; // Hide modal before redirecting
+            // ✅ Reset the navbar for logged-out users
+            if (navLinks) {
+                navLinks.innerHTML = `
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="LoginPage.html">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="SignUpPage.html">Sign Up</a></li>
+                `;
+            }
 
-            setTimeout(() => {
-                window.location.href = "index.html"; // Redirect to home page after logout
-            }, 500); // Small delay to ensure modal closes before redirect
+            // ✅ Hide logout confirmation modal
+            document.getElementById("logout-confirmation-modal").style.display = "none";
+
+            // ✅ Redirect to home page
+            window.location.href = "index.html";
         });
 
-        // Cancel logout
+        // Cancel logout action
         document.getElementById("cancel-logout").addEventListener("click", function () {
-            logoutModal.style.display = "none"; // Close modal
+            document.getElementById("logout-confirmation-modal").style.display = "none"; // Hide modal
         });
     } else {
+        // User is NOT logged in → Show guest navbar
         navLinks.innerHTML = `
-            <li class="nav-item"><a class="nav-link" href="Community.html">Community</a></li>
-            <li class="nav-item"><a class="nav-link" href="LoginPage.html">Login</a></li>
-            <li class="nav-item"><a class="nav-link" href="SignUpPage.html">Register</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="Login.html">Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="Register.html">Sign Up</a></li>
         `;
     }
 });
 
-// Function to extract user ID from JWT
+/**
+ * Extract User ID from JWT Token
+ */
 function getUserIdFromToken(token) {
     try {
         const base64Url = token.split(".")[1];
@@ -308,9 +367,7 @@ function getUserIdFromToken(token) {
         console.error("Error decoding token:", error);
         return null;
     }
-}
-
-            // Search functionality
+};           // Search functionality
             document.getElementById("searchInput").addEventListener("input", function () {
                 const searchQuery = this.value.toLowerCase();
                 const restaurantCards = document.querySelectorAll(".restaurant-card");
@@ -332,7 +389,7 @@ function getUserIdFromToken(token) {
 document.addEventListener("DOMContentLoaded", fetchRestaurants);
 
 function fetchRestaurants() {
-    fetch("https://localhost:7039/api/Restaurant")
+    fetch("https://tawlity.runasp.net/api/Restaurant")
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);

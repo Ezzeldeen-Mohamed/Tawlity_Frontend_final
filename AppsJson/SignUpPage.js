@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", async function () {
-    const API_BASE_URL = "https://tawlity.netlify.app/api/Regester";
+    const API_BASE_URL = "https://tawlity.netlify.app/api/Regester/register";
 
     
     // Populate dropdowns with enum values

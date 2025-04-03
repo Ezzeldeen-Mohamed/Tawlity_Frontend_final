@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     try {
         // Fetch restaurant details
-        const response = await fetch(`https://tawlity.netlify.app/api/Restaurant/with-menu/${restaurantId}`);
+        const response = await fetch(`https://tawlityweb.runasp.net/api/Restaurant/with-menu/${restaurantId}`);
 
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);

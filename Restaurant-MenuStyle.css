@@ -90,30 +90,59 @@ h2 {
     display: block;
     margin-top: 5px;
 }
+            /* Footer Styles */
+        
+        
+            footer {
+                background: rgba(0, 0, 0, 0.9);
+                padding: 5px 0;
+                text-align: center;
+                color: var(--light-color);
+                font-size: 0.95rem;
+                margin-top: 90px;
+            }
     
-/* Footer */
-footer {
-    background: rgba(0, 0, 0, 0.9);
-    padding: 20px 0;
-    text-align: center;
-    color: #fff;
-    font-size: 0.9rem;
-}
-footer p{
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.9rem;
-    margin: 0;
-}
-
-footer a {
-    color: #FFD700;
-    text-decoration: none;
-}
-
-footer a:hover {
-    text-decoration: underline;
-}
-
+            .social-icons {
+                z-index: 1;
+                color: #f8f9fa;
+                margin-bottom: 15px;
+            }
+    
+            .social-icons a {
+                z-index: 1;
+                color: white;
+                font-size: 1.2rem;
+                margin: 0 10px;
+                transition: all 0.3s ease;
+                display: inline-block;
+            }
+    
+            .social-icons a:hover {
+                color: var(--secondary-color);
+                transform: translateY(-3px);
+            }
+    
+            .footer-links {
+                margin-bottom: 15px;
+            }
+    
+            .footer-links a {
+                color: white;
+                text-decoration: none;
+                margin: 0 10px;
+                transition: all 0.3s ease;
+            }
+    
+            .footer-links a:hover {
+                color: #FFA500;
+                text-decoration: underline;
+            }
+    
+            .copyright {
+                font-size: 0.9rem;
+            }
+    
+    
 /* Fade-in Animation */
 @keyframes fadeInContainer {
     from {

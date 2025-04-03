@@ -6,6 +6,8 @@
     <title>Leave a Review | Restaurant App</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="icon" href="./assets/images/Log tawilaty.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -71,19 +73,59 @@
             background-color: #093F28;
             scale: 1.05;
         }
-
+        /* Footer Styles */
+        
+        
         footer {
-            background-color: #000;
-            padding: 20px 0;
-            margin-top: auto;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 5px 0;
             text-align: center;
-            color: #ccc;
+            color: var(--light-color);
+            font-size: 0.95rem;
+            margin-top: 90px;
         }
 
-        footer a {
-            color: #FFD700;
-            text-decoration: none;
+        .social-icons {
+            z-index: 1;
+            color: #f8f9fa;
+            margin-bottom: 15px;
         }
+
+        .social-icons a {
+            z-index: 1;
+            color: white;
+            font-size: 1.2rem;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .social-icons a:hover {
+            color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        .footer-links {
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #FFA500;
+            text-decoration: underline;
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+        }
+
+
 
         @keyframes fadeInContainer {
             from {
@@ -123,19 +165,26 @@
         </form>
         <div id="message" class="mt-3 text-center"></div>
     </div>
-
     <!-- Footer -->
     <footer>
-        <div class="social-icons">
-            <a href="#" class="text-light"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" class="text-light"><i class="fab fa-twitter"></i></a>
-            <a href="#" class="text-light"><i class="fab fa-instagram"></i></a>
+        <div class="containers">
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>  
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <div class="footer-links">
+                <a href="contact.html">Contact Us</a>
+                <a href="AboutUs.html">About</a>
+                <a href=".html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+            </div>
+            <p style="color: white;" class="copyright">&copy; 2024 <a href="index.html" style="color:#ffbe3b">Tawlity</a>. All rights reserved.</p>
         </div>
-        <div class="footer-links mt-3">
-            <a href="ContactUs.html">Contact Us</a> | <a href="AboutUs.html">About</a>
-        </div>
-        <p>&copy; 2024 <a href="index.html" class="text-warning">Tawlity</a>. All rights reserved.</p>
     </footer>
+
+
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {

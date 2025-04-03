@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    
     <style>
                  /* Global Styling */
                  body {
@@ -125,29 +126,58 @@
             transform: scale(1.05);
         }
 
-        /* Footer Styling */
-        footer {
-            background-color: #000;
-            padding: 20px 0;
-            margin-top: auto;
-            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
+              /* Footer Styles */
+        
+        
+              footer {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 5px 0;
+            text-align: center;
+            color: var(--light-color);
+            font-size: 0.95rem;
+            margin-top: 90px;
         }
 
-        footer p {
-            font-size: 0.9rem;
-            color: #ccc;
-            margin: 0;
+        .social-icons {
+            z-index: 1;
+            color: #f8f9fa;
+            margin-bottom: 15px;
         }
 
-        footer a {
-            color: #FFD700;
+        .social-icons a {
+            z-index: 1;
+            color: white;
+            font-size: 1.2rem;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .social-icons a:hover {
+            color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        .footer-links {
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: white;
             text-decoration: none;
-            transition: color 0.3s ease;
+            margin: 0 10px;
+            transition: alal 0.3s ease;
         }
 
-        footer a:hover {
-            color: #fff;
+        .footer-links a:hover {
+            color: #FFA500;
+            text-decoration: underline;
         }
+
+        .copyright {
+            font-size: 0.9rem;
+        }
+
 
         /* Fade-in Animation */
         @keyframes fadeInContainer {
@@ -254,19 +284,25 @@
         </div>
     </div>
 </div>
-
     <!-- Footer -->
     <footer>
-        <div class="social-icons">
-            <a href="#" class="text-light"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" class="text-light"><i class="fab fa-twitter"></i></a>
-            <a href="#" class="text-light"><i class="fab fa-instagram"></i></a>
+        <div class="containers">
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>  
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <div class="footer-links">
+                <a href="contact.html">Contact Us</a>
+                <a href="AboutUs.html">About</a>
+                <a href=".html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+            </div>
+            <p style="color: white;" class="copyright">&copy; 2024 <a href="index.html" style="color:#ffbe3b">Tawlity</a>. All rights reserved.</p>
         </div>
-        <div class="footer-links mt-3">
-            <a href="ContactUs.html">Contact Us</a> | <a href="AboutUs.html">About</a>
-        </div>
-        <p>&copy; 2024 <a href="index.html" class="text-warning">Tawlity</a>. All rights reserved.</p>
     </footer>
+
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

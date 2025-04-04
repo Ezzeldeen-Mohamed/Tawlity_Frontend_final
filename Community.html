@@ -259,12 +259,6 @@
         var formattedDate = now.toLocaleString();  // Format it (adjust as needed)
         document.getElementById("post-date").textContent = "Posted on " + formattedDate;
        });
-        $(document).ready(function() {
-            // تأكد من أن القائمة الجانبية تعمل بشكل صحيح عند النقر على زر القائمة
-            $('.navbar-toggler').click(function() {
-                $('.navbar-collapse').toggleClass('show');
-            });
-        });
 
         // Handle Logout Link Click
         document.querySelector('.nav-link[href="logout.html"]').addEventListener('click', function (e) {

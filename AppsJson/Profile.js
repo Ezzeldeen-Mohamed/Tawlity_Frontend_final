@@ -1,13 +1,6 @@
-$(document).ready(function() {
-    // تأكد من أن القائمة الجانبية تعمل بشكل صحيح عند النقر على زر القائمة
-    $('.navbar-toggler').click(function() {
-        $('.navbar-collapse').toggleClass('show');
-    });
-});
 document.addEventListener("DOMContentLoaded", async function () {
     const token = localStorage.getItem("authToken");
     const userId = localStorage.getItem("userId");
-
     if (!token || !userId) {
         window.location.href = "Login.html"; // إعادة التوجيه إذا لم يكن المستخدم مسجلاً للدخول
         return;

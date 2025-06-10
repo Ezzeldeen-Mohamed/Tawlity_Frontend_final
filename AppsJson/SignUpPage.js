@@ -82,7 +82,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         const gender = parseInt(document.getElementById("gender").value);
         const city = parseInt(document.getElementById("city").value);
         const phone = document.getElementById("phone").value.trim();
-        const creditCard = document.getElementById("creditCard").value.trim();
         const password = document.getElementById("password").value.trim();
         const confirmPassword = document.getElementById("confirm-password").value.trim();
         const termsAccepted = document.getElementById("terms").checked;
@@ -109,7 +108,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                     employeeCity: city,
                     employeePassword: password,
                     employeeConfirmPassword: confirmPassword,
-                    employeeCreditCard: creditCard,
                 }),
             });
 

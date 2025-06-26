@@ -329,6 +329,7 @@ document.addEventListener("DOMContentLoaded", function () {
         navigator.geolocation.getCurrentPosition(position => {
             const userLat = position.coords.latitude;
             const userLon = position.coords.longitude;
+             window.open(`https://www.google.com/maps?q=${userLat},${userLon}`, '_blank');
             getNearbyRestaurants(userLat, userLon);
         }, error => {
             console.error("Geolocation error:", error);
